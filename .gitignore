@@ -1,0 +1,28 @@
+// Unity
+.idea/
+Assembly-CSharp-Editor-firstpass.csproj
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp-firstpass.csproj
+Temp/
+obj/
+Library/
+Builds/
+Logs/
+
+// FMOD
+Assets/FMODStudioCache.asset
+Assets/FMODStudioCache.asset*
+Assets/StreamingAssets/*.bank
+Assets/StreamingAssets/*.bank*
+Assets/StreamingAssets.meta
+fmod.log
+fmod_editor.log
+FmodProject/.cache
+
+// Intellij
+Assets/Plugins/Editor/JetBrains/
+Assets/Plugins/Editor/JetBrains.meta
+
+// Assets
+Assets/ProCamera2D
