@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovementIntent
 {
-    Vector2 direction;
+    public Vector2 direction;
 
     public MovementIntent(Vector2 direction)
     {

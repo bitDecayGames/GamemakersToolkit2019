@@ -32,6 +32,10 @@ public class Board : MonoBehaviour
     {
         ParseLevel();
         // DebugBoardSteps();
+        // Vector2 entityCoord = FindEntityCoords(StandardMoveEnemy.GetComponent<Entity>())[0];
+        // Vector2 entityWantMove = FindEntityMove(entityCoord, Directions.East);
+        // Debug.Log("Entity past coord: " + entityCoord.x + ", " + entityCoord.y);
+        // Debug.Log("Entity future coord: " + entityWantMove.x + ", " + entityWantMove.y);
     }
 
     // Update is called once per frame
@@ -42,6 +46,24 @@ public class Board : MonoBehaviour
 
     List<Vector2> FindEntityCoords(Entity entity)
     {
+        int latest = BoardSteps.Count-1;
+        List<Vector2> entityCoords = new List<Vector2>();
+
+        List<Vector2> allEntities = FindAllEntityCoords();
+
+        foreach (Vector2 coord in allEntities)
+        {
+            if (BoardSteps[latest][(int)coord.y][(int)coord.x].GetComponent<Node>().entity.GetComponent<Entity>().Name == entity.Name)
+            {
+                entityCoords.Add(coord);
+            }
+        }
+
+        return entityCoords;
+    }
+
+    List<Vector2> FindAllEntityCoords()
+    {
         List<Vector2> entityCoords = new List<Vector2>();
         int latest = BoardSteps.Count-1;
 
@@ -50,12 +72,11 @@ public class Board : MonoBehaviour
             for (int x = 0; x < BoardSteps[latest][y].Count; x++)
             {
                 GameObject tempEntity = BoardSteps[latest][y][x].GetComponent<Node>().entity;
-                if(tempEntity != null && entity.Name == tempEntity.GetComponent<Entity>().Name)
+                if(tempEntity != null)
                 {
                     entityCoords.Add(new Vector2(x, y));
                 }
             }
-            
         }
 
         return entityCoords;
@@ -82,8 +103,53 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    // List<List<GameObject>> NextBoardState()
+    Vector2 FindEntityMove(Vector2 entityCoord, Vector2 direction)
+    {
+        int latest = BoardSteps.Count -1;
+
+        GameObject nodeGO = BoardSteps[latest][(int) entityCoord.y][(int) entityCoord.x];
+        Node node = nodeGO.GetComponent<Node>();
+        GameObject entity = node.entity;
+        IMovementBehavior entityMovementBehavior = FindMovementBehavior(entity);
+        Vector2 entityWantMove;
+
+        if(entityMovementBehavior != null)
+        {
+            entityWantMove = entityMovementBehavior.GetMovementIntent(direction).direction + entityCoord;
+        } else 
+        {
+            return entityCoord;
+        }
+       
+        GameObject nodeToCheckGO = BoardSteps[latest][(int) entityWantMove.y][(int) entityWantMove.x];
+        Node nodeToCheck = nodeToCheckGO.GetComponent<Node>();
+
+        if(nodeToCheck != null && nodeToCheck.tile.GetComponent<Tile>().Standable)
+        {
+            return entityWantMove;
+        } else {
+            return entityCoord;
+        }
+    }
+
+    IMovementBehavior FindMovementBehavior(GameObject entity)
+    {
+        foreach (Component component in entity.GetComponents<IMovementBehavior>())
+        {
+            if (component is IMovementBehavior)
+            {
+                return (IMovementBehavior)component;
+            }
+        }
+        return null;
+    }
+
+    // List<List<GameObject>> NextBoardState(Vector2 direction)
     // {
+    //     List<Vector2> AllEntityCoords = FindAllEntityCoords();
+
+    //     List<Vector2> FutureEntityCoords = new List<Vector2>();
+
 
     // }
 
