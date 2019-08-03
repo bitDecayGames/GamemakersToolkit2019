@@ -56,3 +56,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf63a3d48916144094271377117ff35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  lerper: {fileID: 0}
+  Name: NoMoveEntity

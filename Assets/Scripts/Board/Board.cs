@@ -21,8 +21,8 @@ public class Board : MonoBehaviour
 
     List<List<List<GameObject>>> BoardSteps = new List<List<List<GameObject>>>();
 
-    const float TileHeight = 80;
-    const float TileWidth = 80;
+    const float TileHeight = 1;
+    const float TileWidth = 1;
 
     float xOffset;
     float yOffset;
@@ -31,12 +31,87 @@ public class Board : MonoBehaviour
     void Start()
     {
         ParseLevel();
+        // DebugBoardSteps();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    List<Vector2> FindEntityCoords(Entity entity)
+    {
+        List<Vector2> entityCoords = new List<Vector2>();
+        int latest = BoardSteps.Count-1;
+
+        for (int y = 0; y < BoardSteps[latest].Count; y++)
+        {
+            for (int x = 0; x < BoardSteps[latest][y].Count; x++)
+            {
+                GameObject tempEntity = BoardSteps[latest][y][x].GetComponent<Node>().entity;
+                if(tempEntity != null && entity.Name == tempEntity.GetComponent<Entity>().Name)
+                {
+                    entityCoords.Add(new Vector2(x, y));
+                }
+            }
+            
+        }
+
+        return entityCoords;
+    }
+
+    bool RequestedMoveValid(Vector2 direction)
+    {
+        int latest = BoardSteps.Count -1;
+        List<Vector2> playerCoord = FindEntityCoords(Player.GetComponent<Entity>());
+
+        if(playerCoord.Count != 1)
+        {
+            throw new System.StackOverflowException("THERE IS NO PLAYER!!! OH GOD NO!!!!!!!!!");
+        }
+
+        Vector2 nodeCoordToCheck = playerCoord[0] + direction;
+        GameObject nodeToCheckGO = BoardSteps[latest][(int) nodeCoordToCheck.y][(int) nodeCoordToCheck.x];
+        Node nodeToCheck = nodeToCheckGO.GetComponent<Node>();
+
+        if(nodeToCheck != null && nodeToCheck.tile.GetComponent<Tile>().Standable)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    // List<List<GameObject>> NextBoardState()
+    // {
+
+    // }
+
+    // void Undo()
+    // {
+
+    // }
+
+    // bool WinCondition()
+    // {
+
+    // }
+
+    void DebugBoardSteps()
+    {
+        for (int y = 0; y < BoardSteps[0].Count;y++)
+        {
+            for(int x = 0; x < BoardSteps[0][y].Count; x++)
+            {
+                Debug.Log("POS X,Y: " + x + "," + y);
+                Debug.Log("Tyle: " + BoardSteps[0][y][x].GetComponent<Node>().tile.name);
+                var tempEnt = BoardSteps[0][y][x].GetComponent<Node>().entity;
+                if(tempEnt != null)
+                {
+                    Debug.Log("Entyty: " + tempEnt);
+                }
+            }
+        }
     }
 
     void ParseLevel()
@@ -48,7 +123,10 @@ public class Board : MonoBehaviour
 
         for(int y = 0; y < lines.Length; y++)
         {
+            if(lines[y].Length == 0) continue;
+
             initialBoard.Add(new List<GameObject>());
+
             for (int x = 0; x < lines[y].Length; x++)
             {
                 GameObject newNode = Instantiate(Node, new Vector3(TileWidth*x, TileHeight*y, 0), Quaternion.identity);
@@ -142,22 +220,5 @@ public class Board : MonoBehaviour
             }
         }
         BoardSteps.Add(initialBoard);
-    }
-
-    void DebugBoardSteps()
-    {
-        for (int i = 0; i < BoardSteps[0].Count;i++)
-        {
-            for(int j = 0; j < BoardSteps[0][i].Count; j++)
-            {
-                Debug.Log("POS X,Y: " + j + "," + i);
-                Debug.Log("Tile: " + BoardSteps[0][i][j].GetComponent<Node>().tile.name);
-                var tempEnt = BoardSteps[0][i][j].GetComponent<Node>().entity;
-                if(tempEnt != null)
-                {
-                    Debug.Log("Entity: " + tempEnt);
-                }
-            }
-        }
     }
 }

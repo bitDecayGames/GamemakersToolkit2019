@@ -43,4 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef8bf3ee22ba6244b9db3f0d708b814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Floor
+  Name: Floor
+  Standable: 1

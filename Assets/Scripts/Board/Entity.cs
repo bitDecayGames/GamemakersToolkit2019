@@ -6,6 +6,8 @@ public class Entity : MonoBehaviour {
     [HideInInspector] public MyAnimationCtrl animator;
     [HideInInspector] public LerpAnimator lerper;
 
+    public string Name;
+
     private void Start() {
         movementbehavior = GetComponent<IMovementBehavior>();
         animator = GetComponent<MyAnimationCtrl>();
