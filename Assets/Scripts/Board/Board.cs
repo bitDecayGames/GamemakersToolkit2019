@@ -119,8 +119,18 @@ public class Board : MonoBehaviour
         List<List<GameObject>> initialBoard = new List<List<GameObject>>();
 
         string levelFileContents = levelFile.text;
-        string[] lines = Regex.Split(levelFileContents, "\n|\r|\r|\n");
+        string[] lines1 = Regex.Split(levelFileContents, "\n|\r|\r|\n");
+        List<string> linesList = new List<string>();
+        foreach (string s in lines1)
+        {
+            if (s.Length > 0)
+            {
+                linesList.Add(s);
+            }
+        }
 
+        string[] lines = linesList.ToArray();
+        
         for(int y = 0; y < lines.Length; y++)
         {
             if(lines[y].Length == 0) continue;
