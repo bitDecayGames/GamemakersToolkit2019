@@ -184,6 +184,11 @@ public class Board : MonoBehaviour
                         break;
                     // Every Other Move Enemy Node
                     case 's':
+                    case 'z':
+
+                        // 's' is supposed to be a Sleeper that starts awake
+                        // while 'z' is one that starts asleep. For now, let's
+                        // just treat them the same
                         newTile = Instantiate(Floor);
                         newTile.transform.parent = newNode.transform;
                         newNode.GetComponent<Node>().tile = newTile;
@@ -210,10 +215,19 @@ public class Board : MonoBehaviour
                         newTile.transform.parent = newNode.transform;
                         newNode.GetComponent<Node>().tile = newTile;
                         break;
+                    case '{':
+                    case '}':
+                    case '[':
+                    case ']':
+                        // For reflectors, not ready yet, just use floor for now
+                        newTile = Instantiate(Floor);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
+
+                        break;
                     default:
                         throw new System.StackOverflowException("YOU DONE BROKE THE GGAME WITH YOUR DUMB CSV FILER!");
-                        break;
-                }
+                    }
 
                 newNode.transform.parent = gameObject.transform;
                 initialBoard[y].Add(newNode);
