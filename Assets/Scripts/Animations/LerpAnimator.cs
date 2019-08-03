@@ -9,7 +9,7 @@ public class LerpAnimator : MonoBehaviour {
     private float totalTime;
     private Action callback;
 
-    public void Begin(Vector2 startingWorldPosition, Vector2 endWorldPosition, float time, Action callback) {
+    public void Begin(Vector3 startingWorldPosition, Vector3 endWorldPosition, float time, Action callback) {
         isLerping = true;
         start = startingWorldPosition - endWorldPosition;
         end = new Vector3();

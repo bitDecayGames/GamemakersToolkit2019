@@ -7,7 +7,8 @@ public class MyAnimationCtrl : MonoBehaviour {
     private void Start() {
         anim = GetComponentInChildren<Animator>();
     }
-
+    
+    // TODO: hook up the correct animation names
     public void Animate(Vector2 dir) {
         if (isZero(dir.x) && isPos(dir.y)) {
             // north
