@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/Scenes/Test/Test.unity
     guid: 0f957f72debf038459d86ccf7898bf05
+  - enabled: 1
+    path: Assets/_Game/Scenes/Test/TestKabobSpear.unity
+    guid: 161dc718cbdea4742a4bfb8f1ee7b4ae
   m_configObjects: {}
