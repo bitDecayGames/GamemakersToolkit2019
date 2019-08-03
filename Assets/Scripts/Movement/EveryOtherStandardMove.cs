@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EveryOtherStandardMovement: MonoBehaviour, IMovementBehavior
+public class EveryOtherStandardMove: MonoBehaviour, IMovementBehavior
 {
     bool doMove = false;
 

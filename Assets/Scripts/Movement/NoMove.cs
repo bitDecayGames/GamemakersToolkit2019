@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InvertedMovement: MonoBehaviour, IMovementBehavior
+public class NoMove: MonoBehaviour, IMovementBehavior
 {
     public MovementIntent GetMovementIntent(Vector2 direction)
     {
-        return new MovementIntent(direction*-1);
+        return new MovementIntent(Directions.None);
     }
 }

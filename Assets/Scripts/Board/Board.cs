@@ -8,10 +8,10 @@ public class Board : MonoBehaviour
     public string levelFile;
     public GameObject Player;
     public GameObject Floor;
-    public GameObject ZeroMoveEnemy;
-    public GameObject StandardMovementEnemy;
-    public GameObject EveryOtherMovementEnemy;
-    public GameObject InverseMovementEnemy;
+    public GameObject NoMoveEnemy;
+    public GameObject StandardMoveEnemy;
+    public GameObject EveryOtherStandardMoveEnemy;
+    public GameObject InverseMoveEnemy;
 
     List<GameObject[,]> BoardSteps;
 

@@ -43,4 +43,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe962487b486a6408fae03e80308aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  file: 
+  levelFile: 
+  Player: {fileID: 3231074217552719825, guid: dcb2d2aea2fe3ca4897d0dac348e48bd, type: 3}
+  Floor: {fileID: 16286615704570224, guid: 76bfb8e9c22d9504fbd3649567ae2a44, type: 3}
+  NoMoveEnemy: {fileID: 3757134676741450160, guid: 30b15377b8cb15c479332068930b572d,
+    type: 3}
+  StandardMoveEnemy: {fileID: 2369760600406937879, guid: fa15d3d39422ed84e998bb75115572e9,
+    type: 3}
+  EveryOtherStandardMoveEnemy: {fileID: 9195029551651845321, guid: 9dc0221b584f86349986e227a7ec122c,
+    type: 3}
+  InverseMoveEnemy: {fileID: 3292647994188742288, guid: a52f0e4c5efb87441a20f08815868207,
+    type: 3}
