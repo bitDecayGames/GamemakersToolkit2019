@@ -1,19 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class overlord : MonoBehaviour
 {
 
+    //current level
+    public int currentLevel;
+    private int nextLevel;
+
     public Board Board;
+
+    private void Start()
+    {
+        nextLevel = currentLevel + 1;
+    }
 
     // Update is called once per frame
     void Update()
     {
         bool acceptingInput = true;
-
-        //first level
-        int levelId = 01;
 
         //some timer controlling acceptingInput
 
@@ -44,13 +51,32 @@ public class overlord : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
-                //resets the leve
+                //resets the level
                 //Board.goToLevel(current)
                 //Board.resetLevel();??
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 //quits the game to menu
+            }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                //unpause game if paused, otherwise pause
+                if(Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                    //stop pause music
+                    //start normal game music
+                    //***If we care, probably don't***
+                }
+                else
+                {
+                    Time.timeScale = 0;
+                    //stop normal game music
+                    //start pause music
+                    //***If we care, probably don't***
+                }
             }
         }
 
@@ -69,12 +95,14 @@ public class overlord : MonoBehaviour
             if (gameOver.playerWin)
             {
                 //player won
-                //go to next level
+                //TODO :scene transition 
+                //SceneManager.LoadScene("Level" + nextLevel.ToString());
             }
             else
             {
                 //player lost 
-                //restart current level
+                //TODO :scene transition 
+                //SceneManager.LoadScene("Level" + currentLevel.ToString());
             }
         }
 
