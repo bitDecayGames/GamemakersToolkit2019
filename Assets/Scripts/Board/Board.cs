@@ -7,14 +7,22 @@ using UnityEngine;
 public class Board : MonoBehaviour
 {
     public TextAsset levelFile;
-    public GameObject Player;
+    public GameObject Node;
+
     public GameObject Floor;
+    public GameObject ConsumeFloor;
+    public GameObject Void;
+
+    public GameObject Player;
     public GameObject NoMoveEnemy;
     public GameObject StandardMoveEnemy;
     public GameObject EveryOtherStandardMoveEnemy;
     public GameObject InverseMoveEnemy;
 
-    List<GameObject[,]> BoardSteps;
+    List<List<List<GameObject>>> BoardSteps = new List<List<List<GameObject>>>();
+
+    float xOffset;
+    float yOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -30,68 +38,105 @@ public class Board : MonoBehaviour
 
     void ParseLevel()
     {
-        GameObject[,] initialBoard;
-        bool initialBoardinitialized = false;
-        int x = 0;
+        List<List<GameObject>> initialBoard = new List<List<GameObject>>();
         int y = 0;
 
         string levelFileContents = levelFile.text;
         string[] lines = Regex.Split(levelFileContents, "\n|\r|\r|\n");
         for(int i = 0; i < lines.Length; i++)
         {
-            if(!initialBoardinitialized)
-            {
-                initialBoard = new GameObject[lines[i].Length,lines[i].Length];
-                initialBoardinitialized = true;
-            }
-            
+            initialBoard.Add(new List<GameObject>());
             foreach ( char c in lines[i])
             {
-                // Node node = new Node();
+                GameObject newNode = Instantiate(Node);
+                GameObject newTile;
+                GameObject newEntity;
 
                 switch (c)
                 {
+                    // Void Node
+                    case '#':
+                        newTile = Instantiate(Void);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
+
+                        break;
+                    // Empty Floor Node
                     case '.':
-                        Debug.Log("There's a VOID here, at " + x + ", " + y);
+                        newTile = Instantiate(Floor);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
+
                         break;
-                    case '_':
-                        // node.Tile = new Floor();
-                        Debug.Log("There's an empty floor here, at " + x + ", " + y);
-                        break;
+                    // Player Node
                     case 'P':
-                        // node.Tile = new Floor();
-                        // node.Entity = new Player();
-                        Debug.Log("There's a player here, at " + x + ", " + y);
+                        newTile = Instantiate(Floor);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
+
+                        newEntity = Instantiate(Player);
+                        newEntity.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().entity = newEntity;
+
                         break;
-                    case '0':
-                        // node.Tile = new Floor();
-                        // node.Entity = new ZeroMoveEnemy();
-                        Debug.Log("There's a ZEROMOVEENEMY here, at " + x + ", " + y);
+                    // No Move Enemy Node
+                    case 'u':
+                        newTile = Instantiate(Floor);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
+                        
+                        newEntity = Instantiate(NoMoveEnemy);
+                        newEntity.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().entity = newEntity;
+
                         break;
-                    case '1':
-                        // node.Tile = new Floor();
-                        // node.Entity = new StandardMovementEnemy();
-                        Debug.Log("There's a STANDARDMOVENEMY here, at " + x + ", " + y);
+                    // Standard Move Enemy Node
+                    case 'o':
+                        newTile = Instantiate(Floor);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
+                        
+                        newEntity = Instantiate(StandardMoveEnemy);
+                        newEntity.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().entity = newEntity;
+
                         break;
-                    case 'E':
-                        // node.Tile = new Floor();
-                        // node.Entity = new EveryOtherMovementEnemy();
-                        Debug.Log("There's a EVERYOTHERMOVEMENT ENEMY here, at " + x + ", " + y);
+                    // Every Other Move Enemy Node
+                    case 's':
+                        newTile = Instantiate(Floor);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
+                        
+                        newEntity = Instantiate(EveryOtherStandardMoveEnemy);
+                        newEntity.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().entity = newEntity;
+
                         break;
-                    case 'I':
-                        // node.Tile = new Floor();
-                        // node.Entity = new InverseMovementEnemy();
-                        Debug.Log("There's a INVERSEMOVEENEMY here, at " + x + ", " + y);
+                    // Inverse Move Enemy Node
+                    case 'i':
+                        newTile = Instantiate(Floor);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
+                        
+                        newEntity = Instantiate(InverseMoveEnemy);
+                        newEntity.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().entity = newEntity;
+
+                        break;
+                    // Consume Floor Node
+                    case '&':
+                        newTile = Instantiate(ConsumeFloor);
+                        newTile.transform.parent = newNode.transform;
+                        newNode.GetComponent<Node>().tile = newTile;
                         break;
                     default:
                         throw new System.StackOverflowException("YOU DONE BROKE THE GGAME WITH YOUR DUMB CSV FILER!");
                         break;
                 }
 
-                // initialBoard[x,y] = node;
-                x++;
+                newNode.transform.parent = gameObject.transform;
+                initialBoard[y].Add(newNode);
             }
-            x = 0;
             y++;
         }
     }
