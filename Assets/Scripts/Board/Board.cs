@@ -21,8 +21,8 @@ public class Board : MonoBehaviour
 
     List<List<List<GameObject>>> BoardSteps = new List<List<List<GameObject>>>();
 
-    const float TileHeight = 0.8f;
-    const float TileWidth = TileHeight;
+    public const float TileHeight = 0.8f;
+    public const float TileWidth = TileHeight;
 
     float xOffset;
     float yOffset;

@@ -27,6 +27,7 @@ public class SkewerThrower : MonoBehaviour {
         _lineRenderer.startColor = new Color(0, 1, 1);
         _lineRenderer.endColor = new Color(1, 0, 1);
         _lineRenderer.material = Material;
+        _lineRenderer.sortingLayerName = "Skewer";
     }
 
     void Update() {
