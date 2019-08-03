@@ -35,7 +35,10 @@ public class SkewerThrower : MonoBehaviour {
         if (isMoving) {
             var moveSpeedDelta = moveSpeed * Time.deltaTime;
             tipPercent += moveSpeedDelta;
-            if (tipPercent > 1) isMoving = false;
+            if (tipPercent > 1) {
+                isMoving = false;
+                // TODO: SFX skewer slammed into a wall? and stopped
+            }
             line.Clear();
             line.Add(pointOnLine(points, tipPercent));
             line.AddRange(pointsBetweenPercent(points, tailPercent, tipPercent));
@@ -52,6 +55,8 @@ public class SkewerThrower : MonoBehaviour {
     public void Shoot(List<Vector3> points, List<Transform> ingredients, float skewerLength) {
         if (points == null || points.Count < 2) throw new Exception("There must be at least two points in the list, a start and end point");
         if (skewerLength <= 0) throw new Exception("The skewer length must be greater than 0");
+        
+        // TODO: SFX: shoot skewer
         isMoving = true;
         tipPercent = 0;
         tailPercent = 0;
@@ -79,6 +84,7 @@ public class SkewerThrower : MonoBehaviour {
                 var ing = ingredients[i];
                 if (!skeweredIngredients.Contains(ing) && shouldSkewerIngredient(ing)) {
                     skeweredIngredients.Add(ing);
+                    // TODO: SFX ingredient got got
                 }
             }
         }
