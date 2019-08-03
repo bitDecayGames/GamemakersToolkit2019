@@ -21,6 +21,9 @@ public class Board : MonoBehaviour
 
     List<List<List<GameObject>>> BoardSteps = new List<List<List<GameObject>>>();
 
+    const float TileHeight = 80;
+    const float TileWidth = 80;
+
     float xOffset;
     float yOffset;
 
@@ -39,20 +42,20 @@ public class Board : MonoBehaviour
     void ParseLevel()
     {
         List<List<GameObject>> initialBoard = new List<List<GameObject>>();
-        int y = 0;
 
         string levelFileContents = levelFile.text;
         string[] lines = Regex.Split(levelFileContents, "\n|\r|\r|\n");
-        for(int i = 0; i < lines.Length; i++)
+
+        for(int y = 0; y < lines.Length; y++)
         {
             initialBoard.Add(new List<GameObject>());
-            foreach ( char c in lines[i])
+            for (int x = 0; x < lines[y].Length; x++)
             {
-                GameObject newNode = Instantiate(Node);
+                GameObject newNode = Instantiate(Node, new Vector3(TileWidth*x, TileHeight*y, 0), Quaternion.identity);
                 GameObject newTile;
                 GameObject newEntity;
 
-                switch (c)
+                switch (lines[y][x])
                 {
                     // Void Node
                     case '#':
@@ -137,7 +140,24 @@ public class Board : MonoBehaviour
                 newNode.transform.parent = gameObject.transform;
                 initialBoard[y].Add(newNode);
             }
-            y++;
+        }
+        BoardSteps.Add(initialBoard);
+    }
+
+    void DebugBoardSteps()
+    {
+        for (int i = 0; i < BoardSteps[0].Count;i++)
+        {
+            for(int j = 0; j < BoardSteps[0][i].Count; j++)
+            {
+                Debug.Log("POS X,Y: " + j + "," + i);
+                Debug.Log("Tile: " + BoardSteps[0][i][j].GetComponent<Node>().tile.name);
+                var tempEnt = BoardSteps[0][i][j].GetComponent<Node>().entity;
+                if(tempEnt != null)
+                {
+                    Debug.Log("Entity: " + tempEnt);
+                }
+            }
         }
     }
 }
