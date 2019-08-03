@@ -21,8 +21,8 @@ public class Board : MonoBehaviour
 
     List<List<List<GameObject>>> BoardSteps = new List<List<List<GameObject>>>();
 
-    const float TileHeight = 1;
-    const float TileWidth = 1;
+    const float TileHeight = 0.8f;
+    const float TileWidth = TileHeight;
 
     float xOffset;
     float yOffset;
@@ -139,6 +139,7 @@ public class Board : MonoBehaviour
                     case '#':
                         newTile = Instantiate(Void);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
 
                         break;
@@ -146,6 +147,7 @@ public class Board : MonoBehaviour
                     case '.':
                         newTile = Instantiate(Floor);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
 
                         break;
@@ -153,10 +155,12 @@ public class Board : MonoBehaviour
                     case 'P':
                         newTile = Instantiate(Floor);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
 
                         newEntity = Instantiate(Player);
                         newEntity.transform.parent = newNode.transform;
+                        newEntity.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().entity = newEntity;
 
                         break;
@@ -164,10 +168,12 @@ public class Board : MonoBehaviour
                     case 'u':
                         newTile = Instantiate(Floor);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
                         
                         newEntity = Instantiate(NoMoveEnemy);
                         newEntity.transform.parent = newNode.transform;
+                        newEntity.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().entity = newEntity;
 
                         break;
@@ -175,10 +181,12 @@ public class Board : MonoBehaviour
                     case 'o':
                         newTile = Instantiate(Floor);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
                         
                         newEntity = Instantiate(StandardMoveEnemy);
                         newEntity.transform.parent = newNode.transform;
+                        newEntity.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().entity = newEntity;
 
                         break;
@@ -191,10 +199,12 @@ public class Board : MonoBehaviour
                         // just treat them the same
                         newTile = Instantiate(Floor);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
                         
                         newEntity = Instantiate(EveryOtherStandardMoveEnemy);
                         newEntity.transform.parent = newNode.transform;
+                        newEntity.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().entity = newEntity;
 
                         break;
@@ -202,10 +212,12 @@ public class Board : MonoBehaviour
                     case 'i':
                         newTile = Instantiate(Floor);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
                         
                         newEntity = Instantiate(InverseMoveEnemy);
                         newEntity.transform.parent = newNode.transform;
+                        newEntity.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().entity = newEntity;
 
                         break;
@@ -213,6 +225,7 @@ public class Board : MonoBehaviour
                     case '&':
                         newTile = Instantiate(ConsumeFloor);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
                         break;
                     case '{':
@@ -222,6 +235,7 @@ public class Board : MonoBehaviour
                         // For reflectors, not ready yet, just use floor for now
                         newTile = Instantiate(Floor);
                         newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
 
                         break;

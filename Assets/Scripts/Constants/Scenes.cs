@@ -18,24 +18,26 @@ public class Scenes
 	public const string Level08 = "Level08";
 	public const string Level09 = "Level09";
 	public const string Level10 = "Level10";
+	public const string TestGameUI = "TestGameUI";
 	public enum SceneEnum
 	{
-		TitleScreen = 98,
-		Credits = 206,
-		BitdecaySplash = 144,
-		GameJamSplash = 253,
-		Test = 160,
-		TestKabobSpear = 122,
-		Level01 = 89,
-		Level02 = 90,
-		Level03 = 91,
-		Level04 = 92,
-		Level05 = 93,
-		Level06 = 94,
-		Level07 = 95,
-		Level08 = 96,
-		Level09 = 97,
-		Level10 = 89,
+		TitleScreen = 0,
+		Credits = 1,
+		BitdecaySplash = 2,
+		GameJamSplash = 3,
+		Test = 4,
+		TestKabobSpear = 5,
+		Level01 = 6,
+		Level02 = 7,
+		Level03 = 8,
+		Level04 = 9,
+		Level05 = 10,
+		Level06 = 11,
+		Level07 = 12,
+		Level08 = 13,
+		Level09 = 14,
+		Level10 = 15,
+		TestGameUI = 16,
 	}
 	public static string GetSceneNameFromEnum(SceneEnum sceneEnum)
 	{
@@ -73,6 +75,8 @@ public class Scenes
 				return Level09;
 			case SceneEnum.Level10:
 				return Level10;
+			case SceneEnum.TestGameUI:
+				return TestGameUI;
 			default:
 				throw new Exception("Unable to resolve scene name for: " + sceneEnum);
 		}
