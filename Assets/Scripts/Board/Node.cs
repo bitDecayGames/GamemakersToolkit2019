@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    Tile tile;
-    Entity entity;
+    public GameObject tile;
+    public GameObject entity;
 
     // Start is called before the first frame update
     void Start()

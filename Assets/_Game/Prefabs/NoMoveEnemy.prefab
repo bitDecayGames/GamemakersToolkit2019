@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5963874501314558104}
   - component: {fileID: 6583589584459976042}
+  - component: {fileID: 7432528937861377546}
   m_Layer: 0
   m_Name: NoMoveEnemy
   m_TagString: Untagged
@@ -41,5 +42,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 299fea9bdc8754142818bd9b84168dbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7432528937861377546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757134676741450160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf63a3d48916144094271377117ff35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
