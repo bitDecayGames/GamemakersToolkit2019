@@ -7,6 +7,7 @@ public class Scenes
 	public const string BitdecaySplash = "BitdecaySplash";
 	public const string GameJamSplash = "GameJamSplash";
 	public const string Test = "Test";
+	public const string TestKabobSpear = "TestKabobSpear";
 	public enum SceneEnum
 	{
 		TitleScreen = 98,
@@ -14,6 +15,7 @@ public class Scenes
 		BitdecaySplash = 144,
 		GameJamSplash = 253,
 		Test = 160,
+		TestKabobSpear = 122,
 	}
 	public static string GetSceneNameFromEnum(SceneEnum sceneEnum)
 	{
@@ -29,6 +31,8 @@ public class Scenes
 				return GameJamSplash;
 			case SceneEnum.Test:
 				return Test;
+			case SceneEnum.TestKabobSpear:
+				return TestKabobSpear;
 			default:
 				throw new Exception("Unable to resolve scene name for: " + sceneEnum);
 		}
