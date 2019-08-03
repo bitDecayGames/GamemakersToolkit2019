@@ -26,3 +26,5 @@ Assets/Plugins/Editor/JetBrains.meta
 
 // Assets
 Assets/ProCamera2D
+// VS
+*.vs*

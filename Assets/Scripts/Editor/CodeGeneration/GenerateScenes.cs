@@ -35,16 +35,11 @@ public class GenerateScenes : MonoBehaviour
 
         classDefinition += "\tpublic enum SceneEnum\n";
         classDefinition += "\t{\n";
-        
-        foreach (string sceneName in sceneNamesList)
-        {
-            byte[] sceneAsByteArray = System.Text.Encoding.UTF8.GetBytes(sceneName.ToCharArray());
-            byte sceneEnumByteValue = 0;
-            foreach (byte b in sceneAsByteArray)
-            {
-                sceneEnumByteValue += b;
-            }
-            classDefinition += string.Format("\t\t{0} = {1},\n", sceneName, sceneEnumByteValue);
+
+        int k = 0;
+        foreach (string sceneName in sceneNamesList) {
+            classDefinition += string.Format("\t\t{0} = {1},\n", sceneName, k);
+            k++;
         }
         
         classDefinition += "\t}\n";

@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SkewerThrower : MonoBehaviour {
+    private const float skewerCatchDistance = 0.2f;
+    private const float moveSpeed = 1f;
     public Material Material;
-    
+
     private LineRenderer _lineRenderer;
 
+    private List<Transform> ingredients;
+    private List<Transform> skeweredIngredients;
     private List<Vector3> points;
     private List<Vector3> line;
+    private List<float> ingredientSpots;
     private float skewerLength;
     private bool isMoving;
-    private float moveSpeed = 1f / 30f;
 
     private float tipPercent;
     private float tailPercent;
@@ -26,39 +30,69 @@ public class SkewerThrower : MonoBehaviour {
     }
 
     void Update() {
-        // TODO: take this out and put it somewhere else
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            var p = new List<Vector3>();
-            p.Add(new Vector3(-6, -2, 0));
-            p.Add(new Vector3(2, -2, 0));
-            p.Add(new Vector3(2, 2, 0));
-            p.Add(new Vector3(6, 2, 0));
-            Shoot(p, 4);
-        }
+        
 
         if (isMoving) {
-            tipPercent += moveSpeed;
-            if (tipPercent > 1) isMoving = false;
+            var moveSpeedDelta = moveSpeed * Time.deltaTime;
+            tipPercent += moveSpeedDelta;
+            if (tipPercent > 1) {
+                isMoving = false;
+                // TODO: SFX skewer slammed into a wall? and stopped
+            }
             line.Clear();
             line.Add(pointOnLine(points, tipPercent));
             line.AddRange(pointsBetweenPercent(points, tailPercent, tipPercent));
             line.Add(pointOnLine(points, tailPercent));
-            if (lineLength(line) > skewerLength) tailPercent += moveSpeed;
+            if (lineLength(line) > skewerLength) tailPercent += moveSpeedDelta;
 
+            skewerIngredients();
+            moveIngredients();
             _lineRenderer.positionCount = line.Count;
             _lineRenderer.SetPositions(line.ToArray());
         }
     }
 
-    public void Shoot(List<Vector3> points, float skewerLength) {
+    public void Shoot(List<Vector3> points, List<Transform> ingredients, float skewerLength) {
         if (points == null || points.Count < 2) throw new Exception("There must be at least two points in the list, a start and end point");
         if (skewerLength <= 0) throw new Exception("The skewer length must be greater than 0");
+        
+        // TODO: SFX: shoot skewer
         isMoving = true;
         tipPercent = 0;
         tailPercent = 0;
+        this.ingredients = ingredients;
         this.points = points;
         this.skewerLength = skewerLength;
         line = new List<Vector3>();
+        ingredientSpots = new List<float>();
+        for (int i = 0; i < ingredients.Count; i++) {
+            ingredientSpots.Add(i / (ingredients.Count + 2f));
+        }
+
+        skeweredIngredients = new List<Transform>();
+    }
+
+    private void moveIngredients() {
+        for (int i = 0; i < skeweredIngredients.Count; i++) {
+            skeweredIngredients[i].position = pointOnLine(line, 1 - ingredientSpots[i]);
+        }
+    }
+
+    private void skewerIngredients() {
+        if (ingredients.Count > skeweredIngredients.Count) {
+            for (int i = 0; i < ingredients.Count; i++) {
+                var ing = ingredients[i];
+                if (!skeweredIngredients.Contains(ing) && shouldSkewerIngredient(ing)) {
+                    skeweredIngredients.Add(ing);
+                    // TODO: SFX ingredient got got
+                }
+            }
+        }
+    }
+
+    private bool shouldSkewerIngredient(Transform ingredient) {
+        var point = pointOnLine(line, 1 - ingredientSpots[skeweredIngredients.Count]);
+        return Vector3.Distance(point, ingredient.position) < skewerCatchDistance;
     }
 
     private static Vector3 pointOnLine(List<Vector3> line, float percent) {
