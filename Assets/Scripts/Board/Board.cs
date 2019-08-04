@@ -32,17 +32,20 @@ public class Board : MonoBehaviour
     {
         ParseLevel();
         // DebugBoardSteps();
+        // FindAllEntityCoords();
         // Vector2 entityCoord = FindEntityCoords(StandardMoveEnemy.GetComponent<Entity>())[0];
         // Vector2 entityWantMove = FindEntityMove(entityCoord, Directions.East);
         // Debug.Log("Entity past coord: " + entityCoord.x + ", " + entityCoord.y);
         // Debug.Log("Entity future coord: " + entityWantMove.x + ", " + entityWantMove.y);
-        NextBoardState(Directions.East);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            NextBoardState(Directions.North);
+        }
     }
 
     List<List<GameObject>> GetLatestBoardStep()
@@ -69,6 +72,24 @@ public class Board : MonoBehaviour
         return entityCoords;
     }
 
+
+    void DebugBoardSteps()
+    {
+        for (int y = 0; y < BoardSteps[0].Count;y++)
+        {
+            for(int x = 0; x < BoardSteps[0][y].Count; x++)
+            {
+                Debug.Log("POS X,Y: " + x + "," + y);
+                Debug.Log("Tyle: " + BoardSteps[0][y][x].GetComponent<Node>().tile.name);
+                var tempEnt = BoardSteps[0][y][x].GetComponent<Node>().entity;
+                if(tempEnt != null)
+                {
+                    Debug.Log("Entyty: " + tempEnt);
+                }
+            }
+        }
+    }
+
     List<Vector2> FindAllEntityCoords()
     {
         List<Vector2> entityCoords = new List<Vector2>();
@@ -81,6 +102,7 @@ public class Board : MonoBehaviour
                 GameObject tempEntity = BoardSteps[latest][y][x].GetComponent<Node>().entity;
                 if(tempEntity != null)
                 {
+                    Debug.Log("temp entity: " + tempEntity.GetComponent<Entity>().Name);
                     entityCoords.Add(new Vector2(x, y));
                 }
             }
@@ -151,22 +173,31 @@ public class Board : MonoBehaviour
         return null;
     }
 
-    void ClearBoardStep(List<List<GameObject>> boardStep)
+    List<List<GameObject>> GetBlankBoardStep()
     {
-        for(int y = 0; y < boardStep.Count; y++)
+        List<List<GameObject>> latestBoardStep = GetLatestBoardStep();
+        List<List<GameObject>> blankBoardStep = new List<List<GameObject>>();
+        for(int y = 0; y < latestBoardStep.Count; y++)
         {
-            for(int x = 0; x < boardStep[y].Count; x++)
+            blankBoardStep.Add(new List<GameObject>());
+            for (int x = 0; x < latestBoardStep[y].Count; x++)
             {
-                boardStep[y][x].GetComponent<Node>().entity = null;
+                GameObject blankNode = Instantiate(Node, latestBoardStep[y][x].transform.position, Quaternion.identity);
+                blankNode.name = BoardSteps.Count + "Node(" + x + ", " + y + ")";
+
+                blankNode.GetComponent<Node>().tile = latestBoardStep[y][x].GetComponent<Node>().tile;
+                latestBoardStep[y][x].GetComponent<Node>().tile.transform.parent = blankNode.transform;
+
+                blankNode.transform.parent = gameObject.transform;
+                blankBoardStep[y].Add(blankNode);
             }
         }
+        return blankBoardStep;
     }
-
 
     List<List<GameObject>> NextBoardState(Vector2 direction)
     {
-        List<List<GameObject>> newBoardStep = GetLatestBoardStep();
-        ClearBoardStep(newBoardStep);
+        List<List<GameObject>> newBoardStep = GetBlankBoardStep();
 
         List<Vector2> AllEntityPastCoords = FindAllEntityCoords();
 
@@ -192,14 +223,39 @@ public class Board : MonoBehaviour
         //     Debug.Log("Entity Collision Coord: " + coord.x + ", " + coord.y);
         // }
 
+        Debug.Log("We get here");
+        Debug.Log("All entity pst crod" + AllEntityPastCoords.Count);
+
+        List<List<GameObject>> latestBoardStep = GetLatestBoardStep();
+
         for(int i = 0; i < AllEntityPastCoords.Count; i++)
         {
-            List<List<GameObject>> latestBoardSTep = GetLatestBoardStep();
-            GameObject entity = latestBoardSTep[(int)AllEntityPastCoords[i].y][(int)AllEntityPastCoords[i].x].GetComponent<Node>().entity;
-            newBoardStep[(int)CyclicCheckCoords[i].y][(int)CyclicCheckCoords[i].x].GetComponent<Node>().entity = entity;
+            Debug.Log("Entity Past Coord: " + AllEntityPastCoords[i].x + ", " + AllEntityPastCoords[i].y);
+            Debug.Log("Entity Cyclic Coord: " + CyclicCheckCoords[i].x + ", " + CyclicCheckCoords[i].y);
+
+            GameObject entity = latestBoardStep[(int)AllEntityPastCoords[i].y][(int)AllEntityPastCoords[i].x].GetComponent<Node>().entity;
+            Node newNode = newBoardStep[(int)CyclicCheckCoords[i].y][(int)CyclicCheckCoords[i].x].GetComponent<Node>();
+            newNode.entity = entity;
+
+            newNode.entity.transform.parent = newNode.transform;
+
+            entity.GetComponent<Entity>().Move(newNode.entity.transform.position, 1, ()=>{});
         }
 
+        DestroyBoardStepNodes(latestBoardStep);
+
         return newBoardStep;
+    }
+
+    void DestroyBoardStepNodes(List<List<GameObject>> boardStep)
+    {
+        for (int y = 0; y < boardStep.Count; y ++)
+        {
+            for (int x = 0; x < boardStep[y].Count; x ++)
+            {
+                Destroy(boardStep[y][x]);
+            }
+        }
     }
 
     List<Vector2> CollisionCheck (List<Vector2> PastCoords, List<Vector2> FutureCoords)
@@ -268,24 +324,6 @@ public class Board : MonoBehaviour
     // {
 
     // }
-
-    void DebugBoardSteps()
-    {
-        for (int y = 0; y < BoardSteps[0].Count;y++)
-        {
-            for(int x = 0; x < BoardSteps[0][y].Count; x++)
-            {
-                Debug.Log("POS X,Y: " + x + "," + y);
-                Debug.Log("Tyle: " + BoardSteps[0][y][x].GetComponent<Node>().tile.name);
-                var tempEnt = BoardSteps[0][y][x].GetComponent<Node>().entity;
-                if(tempEnt != null)
-                {
-                    Debug.Log("Entyty: " + tempEnt);
-                }
-            }
-        }
-    }
-
     void ParseLevel()
     {
         List<List<GameObject>> initialBoard = new List<List<GameObject>>();
@@ -312,6 +350,7 @@ public class Board : MonoBehaviour
             for (int x = 0; x < lines[y].Length; x++)
             {
                 GameObject newNode = Instantiate(Node, new Vector3(TileWidth*x, TileHeight*y, 0), Quaternion.identity);
+                newNode.name = "Node(" + x + "," + y + ")";
                 GameObject newTile;
                 GameObject newEntity;
 
