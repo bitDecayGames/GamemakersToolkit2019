@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TintCanvasController : MonoBehaviour {
     private const string SuccessDisplay = "Ka-nice!";
     private const string SuccessContinue = "Press Spacebar to proceed";
-    private const string FailureDisplay = "Ka-failed...";
+    private const string FailureDisplay = "Ka-failed: ";
     private const string FailureContinue = "Press spacebar to retry";
 
     public Image Tint;
@@ -40,11 +40,11 @@ public class TintCanvasController : MonoBehaviour {
         FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.LowPass, 0);
     }
 
-    public void Fail(Action onSpace) {
+    public void Fail(GameOverReason reason, Action onSpace) {
         timer = 2;
         onTimerEnd = () => {
             this.onSpace = onSpace;
-            DisplayText.text = FailureDisplay;
+            DisplayText.text = FailureDisplay + ReasonToString(reason);
             ContinueText.text = FailureContinue;
             Tint.enabled = true;
             DisplayText.enabled = true;
@@ -64,5 +64,26 @@ public class TintCanvasController : MonoBehaviour {
             ContinueText.enabled = true;
             FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.LowPass, 1f);
         };
+    }
+
+    private string ReasonToString(GameOverReason reason)
+    {
+        switch(reason)
+        {
+            case GameOverReason.DIDNT_SKEWER_ALL_INGREDIENTS:
+                return "Some Ingredients didn't get skewered!";
+            case GameOverReason.DROPPED_INGREDIENT_IN_WATER:
+                return "An Ingredient got wet. Dinner is ruined!";
+            case GameOverReason.SKEWERD_YOURSELF:
+                return "Um, try not to kill yourself.";
+            case GameOverReason.SMOOSHED_INGREDIENTS:
+                return "Ingredients got squished together. Gross.";
+            case GameOverReason.TOUCHED_INGREDIENT:
+                return "An Ingredient ate you! Stay away and stay safe.";
+            case GameOverReason.SKEWERED_ALL_INGREDIENTS:
+                return "Won!";
+            default:
+                return "I have no idea why. At All.";
+        }
     }
 }

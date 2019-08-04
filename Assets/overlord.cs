@@ -122,7 +122,7 @@ public class overlord : MonoBehaviour {
                 });
             } else {
                 //player lost 
-                endGamePlayer.Fail(() => {
+                endGamePlayer.Fail(status.reason, () => {
                     endGamePlayer.Reset();
                     // Restart this level
                     Restart();
