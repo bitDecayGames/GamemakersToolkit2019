@@ -11,29 +11,39 @@ public class overlord : MonoBehaviour {
 
     public Board Board;
 
-    void Update() {
+    private const float InputLockoutDuration = .35f;
+    private float _lockoutDuration;
+    
+    void Update()
+    {
+        _lockoutDuration -= Time.deltaTime;
+        
         //some timer controlling acceptingInput
         bool gotInput = false;
         Vector2 input = new Vector2();
-        if (acceptingInput) {
+        if (acceptingInput && _lockoutDuration <= 0) {
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 input = Directions.North;
                 gotInput = true;
+                _lockoutDuration = InputLockoutDuration;
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow)) {
                 input = Directions.South;
                 gotInput = true;
+                _lockoutDuration = InputLockoutDuration;
             }
 
             if (Input.GetKeyDown(KeyCode.LeftArrow)) {
                 input = Directions.West;
                 gotInput = true;
+                _lockoutDuration = InputLockoutDuration;
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow)) {
                 input = Directions.East;
                 gotInput = true;
+                _lockoutDuration = InputLockoutDuration;
             }
 
             //OUT OF SCOPE

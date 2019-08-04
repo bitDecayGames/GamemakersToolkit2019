@@ -216,7 +216,7 @@ public class Board : MonoBehaviour {
             newNode.entity = entity;
 
             newNode.entity.transform.parent = newNode.transform;
-            entity.GetComponent<Entity>().Move(newNode.transform.position, 1, ()=>{});
+            entity.GetComponent<Entity>().Move(newNode.transform.position, .25f, ()=>{});
         }
         
         VectorSet SpikeCoords = SpikeTileCheck(newBoardStep);
