@@ -1,9 +1,12 @@
 using System;
+using SuperTiled2Unity;
 using UnityEngine;
 
 public class DestinationSlide : MonoBehaviour
 {
     public Vector3 Destination = Vector3.zero;
+    public String ExtraSound;
+    public GameObject FlashScreen;
 
     public bool done;
 
@@ -13,12 +16,21 @@ public class DestinationSlide : MonoBehaviour
         {
             if (transform.position != Destination)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Destination, .07f);
+                transform.position = Vector3.MoveTowards(transform.position, Destination, .065f);
             }
             else
             {
                 done = true;
                 FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.Squish);
+                if (!ExtraSound.IsEmpty())
+                {
+                    FMODSoundEffectsPlayer.Instance.PlaySoundEffect(ExtraSound);
+                }
+
+                if (FlashScreen != null)
+                {
+                    FlashScreen.GetComponent<FlashSprite>().Flash();
+                }
             }
         }
     }
