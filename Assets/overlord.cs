@@ -7,6 +7,8 @@ public class overlord : MonoBehaviour {
     //current level
     public int currentLevel;
     private int nextLevel;
+    private bool inSkewerThrowMode = false;
+    private bool acceptingInput = true;
 
     public Board Board;
 
@@ -16,7 +18,6 @@ public class overlord : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        bool acceptingInput = true;
 
         //some timer controlling acceptingInput
 
@@ -38,10 +39,10 @@ public class overlord : MonoBehaviour {
                 input = Directions.East;
             }
 
-            if (Input.GetKeyDown(KeyCode.Backspace)) {
-                //un-does the previous move
-                //Board.undo();
-            }
+            //if (Input.GetKeyDown(KeyCode.Backspace)) {
+            //    //un-does the previous move
+            //    //Board.undo();
+            //}
 
             if (Input.GetKeyDown(KeyCode.R)) {
                 //resets the level
@@ -67,10 +68,25 @@ public class overlord : MonoBehaviour {
                     //***If we care, probably don't***
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                inSkewerThrowMode = true;
+            }
         }
 
         //Send input to board
-        //Board.boardInput(input);
+        if (inSkewerThrowMode)
+        {
+            //Board.ThrowSkewer(input)
+            inSkewerThrowMode = false;
+            acceptingInput = false;
+        }
+        else
+        {
+            //when not in throw mode, past directional input as movement
+            //Board.movement(input);
+        }
 
         //Did game end
         //may need more meta data for the types of foods that were skewered on the level
