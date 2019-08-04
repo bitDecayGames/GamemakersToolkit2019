@@ -23,12 +23,7 @@ public class CanvasGroupAlphaBounceComponent : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            FMODMusicPlayer.Instance.StopThenDestroy();
-            GetComponent<EasyNavigator>().GoToScene("Level01");
-            FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.PressStart);
-        }
+        
         
         if (!isFading)
         {

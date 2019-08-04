@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.2421875
+  orthographic size: 4.3125
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -808,6 +808,7 @@ GameObject:
   - component: {fileID: 1599645065}
   - component: {fileID: 1599645064}
   - component: {fileID: 1599645066}
+  - component: {fileID: 1599645067}
   m_Layer: 5
   m_Name: PressStartCanvas
   m_TagString: Untagged
@@ -929,6 +930,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74a8c9b44b404ba5b2fe4026ffb4ae2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1599645067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599645059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afd230f045d47c6bf6478dfea020526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1621281766

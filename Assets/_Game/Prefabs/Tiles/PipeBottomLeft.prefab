@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Floor
-  Standable: 1
+  Standable: 0
 --- !u!212 &1711594542263670943
 SpriteRenderer:
   m_ObjectHideFlags: 0
