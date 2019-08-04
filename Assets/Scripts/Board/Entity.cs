@@ -1,5 +1,4 @@
 ﻿using System;
-using Boo.Lang.Environments;
 using UnityEngine;
 
 public class Entity : MonoBehaviour {
