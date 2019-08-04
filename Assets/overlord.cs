@@ -98,8 +98,8 @@ public class overlord : MonoBehaviour {
                     endGamePlayer.Reset();
                     // Go to next level
                     if (CurrentLevelNumber.Instance.LevelNumber + 1 > LevelContent.levels.Count) {
-                        // TODO: they won the entire game!
-                        goToScene("MainMenu");
+                        // they won the entire game!
+                        goToScene("Credits");
                     } else {
                         CurrentLevelNumber.Instance.LevelNumber += 1;
                         goToScene(SceneManager.GetActiveScene().name);
