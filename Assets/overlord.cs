@@ -88,11 +88,8 @@ public class overlord : MonoBehaviour {
             if (inSkewerThrowMode) {
                 status = Board.ThrowSkewer(input);
                 inSkewerThrowMode = false;
-            }
-            else
-            {
-                if (Board.RequestedMoveValid(input))
-                {
+            } else {
+                if (Board.RequestedMoveValid(input)) {
                     //when not in throw mode, past directional input as movement
                     status = Board.NextBoardState(input);
                 }
@@ -110,8 +107,13 @@ public class overlord : MonoBehaviour {
                     Debug.Log("The user pressed space to go to the next scene");
                     endGamePlayer.Reset();
                     // Go to next level
-                    CurrentLevelNumber.Instance.LevelNumber += 1;
-                    goToScene(SceneManager.GetActiveScene().name);
+                    if (CurrentLevelNumber.Instance.LevelNumber + 1 > LevelContent.levels.Count) {
+                        // TODO: they won the entire game!
+                        goToScene("MainMenu");
+                    } else {
+                        CurrentLevelNumber.Instance.LevelNumber += 1;
+                        goToScene(SceneManager.GetActiveScene().name);
+                    }
                 });
             } else {
                 //player lost 
