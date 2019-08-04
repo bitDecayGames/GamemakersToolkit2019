@@ -59,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/Scenes/Test/TestShootSkewer.unity
     guid: 1c7ae523f5f6e45c89828dbbfaf0c383
+  - enabled: 1
+    path: Assets/_Game/Scenes/Menus/Credits2.unity
+    guid: 31e7f4298b6b54f429911a228b4feade
   m_configObjects: {}
