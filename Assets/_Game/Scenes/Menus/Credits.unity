@@ -177,11 +177,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "Art\n\tErik \"High Contrast\" Meredith\n\nMusic Writing/Composition\n\tTanner
-    \"more bleeps\" Moore\n\nSFX\n\tLuke \"rag throw\" Fisher\n\tTanner \"Synthchip\"
-    Moore\n\nProgramming\n\tJake \"resilience\" Fisher\n\tTanner \"barely helped\"
+  m_text: "KA-Art\n\tErik \"High Contrast\" Meredith\n\nKA-Music Writing/Composition\n\tTanner
+    \"more bleeps\" Moore\n\nKA-SFX\n\tLuke \"rag throw\" Fisher\n\tTanner \"Bitchrusher\"
+    Moore\n\nKA-Programming\n\tJake \"resilience\" Fisher\n\tTanner \"barely helped\"
     Moore\n\tLogan \"ima go cook now\" Moore\n\tMichael \"couch-coder\" Wingfield\n\tTristan
-    \"I sleep at home\" Havlick\n\t"
+    \"I sleep at home\" Havlick\n\tLuke \"What should i work on\" Fisher\n\t"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffc6afc37bf014347876eee559766f28, type: 2}
   m_sharedMaterial: {fileID: 5384614314693442228, guid: ffc6afc37bf014347876eee559766f28,
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 26.7
+  m_fontSize: 23.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -251,12 +251,12 @@ MonoBehaviour:
   m_margin: {x: 17.897236, y: 21.476652, z: 0, w: 12.270595}
   m_textInfo:
     textComponent: {fileID: 985475362}
-    characterCount: 315
+    characterCount: 366
     spriteCount: 0
-    spaceCount: 55
-    wordCount: 43
+    spaceCount: 63
+    wordCount: 50
     linkCount: 0
-    lineCount: 17
+    lineCount: 18
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -505,7 +505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -118.5, y: 47.3}
+  m_AnchoredPosition: {x: -118.5, y: 47.299988}
   m_SizeDelta: {x: 212.4, y: 64.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1807787331

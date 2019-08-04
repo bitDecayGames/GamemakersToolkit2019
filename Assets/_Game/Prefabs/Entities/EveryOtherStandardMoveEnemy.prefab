@@ -68,9 +68,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1085758929
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4428007689558990534, guid: f3a264fad3d484f32a0594bafe3ee1db,
+  m_Sprite: {fileID: 7781682652552636025, guid: 92f653c6d9cc74763becd900fb39ab9f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -148,6 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb22d5bfebb39c94a9eba89aa1717b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  awakeSprite: {fileID: 7781682652552636025, guid: 92f653c6d9cc74763becd900fb39ab9f,
+    type: 3}
+  sleepingSprite: {fileID: 7355374725913390886, guid: 92f653c6d9cc74763becd900fb39ab9f,
+    type: 3}
 --- !u!114 &2738753259964498378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf63a3d48916144094271377117ff35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  MyAnimator: {fileID: 0}
   lerper: {fileID: 0}
   Name: EveryOtherStandardMoveEnemy
 --- !u!114 &6455708400080535786
@@ -187,3 +191,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac6bf98449d141239a400a7ecc3dcc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
