@@ -19,7 +19,7 @@ public class TintCanvasController : MonoBehaviour {
     private float timer;
 
     private void Update() {
-        if (onSpace != null) {
+        if (onSpace != null && Input.GetKeyDown(KeyCode.Space)) {
             onSpace();
             onSpace = null;
         }
