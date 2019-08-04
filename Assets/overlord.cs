@@ -15,7 +15,7 @@ public class overlord : MonoBehaviour {
 
     public Board Board;
 
-    private const float InputLockoutDuration = .3f;
+    private const float InputLockoutDuration = .25f;
     private float _lockoutDuration;
     
     void Update()
@@ -30,35 +30,31 @@ public class overlord : MonoBehaviour {
         // allow the player to quit to menu at any point
         if (Input.GetKeyDown(KeyCode.Escape)) {
             //quits the game to menu
-            goToScene("MainMenu");
+            goToScene("TitleScreen");
         }
         
         //some timer controlling acceptingInput
         bool gotInput = false;
         Vector2 input = new Vector2();
         if (acceptingInput && _lockoutDuration <= 0) {
-            if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
                 input = Directions.North;
                 gotInput = true;
-                _lockoutDuration = InputLockoutDuration;
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            if (Input.GetKeyDown(KeyCode.DownArrow)|| Input.GetKeyDown(KeyCode.S)) {
                 input = Directions.South;
                 gotInput = true;
-                _lockoutDuration = InputLockoutDuration;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) {
                 input = Directions.West;
                 gotInput = true;
-                _lockoutDuration = InputLockoutDuration;
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) {
                 input = Directions.East;
                 gotInput = true;
-                _lockoutDuration = InputLockoutDuration;
             }
 
             //OUT OF SCOPE
@@ -97,6 +93,7 @@ public class overlord : MonoBehaviour {
                 if (Board.RequestedMoveValid(input)) {
                     //when not in throw mode, past directional input as movement
                     status = Board.NextBoardState(input);
+                    _lockoutDuration = InputLockoutDuration;
                 }
             }
         }
