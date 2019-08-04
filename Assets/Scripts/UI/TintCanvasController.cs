@@ -33,6 +33,15 @@ public class TintCanvasController : MonoBehaviour {
         }
     }
 
+    public void Start()
+    {
+        foreach (Canvas c in GetComponentsInChildren<Canvas>())
+        {
+            c.worldCamera = Camera.main;
+        }
+        
+    }
+
     public void Reset() {
         Tint.enabled = false;
         DisplayText.enabled = false;
