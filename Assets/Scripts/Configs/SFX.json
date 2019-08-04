@@ -1,5 +1,12 @@
 {
   "SFX":[
-    "Sound"
+    "Crunch",
+    "CrunchSmall",
+    "PressStart",
+    "Sound",
+    "Squish",
+    "Step",
+    "Throw",
+    "Button"
   ]
 }

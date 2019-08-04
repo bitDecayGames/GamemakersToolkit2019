@@ -8,8 +8,16 @@ namespace Utils {
         {
             if (!FadeToBlack.Instance.IsFadingOut())
             {
-                FadeToBlack.Instance.FadeOutToScene(2f, sceneName);
-                FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.Sound);
+                FadeToBlack.Instance.FadeOutToScene(2.5f, sceneName);
+            }
+        }
+        
+        public void GoToSceneWithSoundWithClick(string sceneName)
+        {
+            if (!FadeToBlack.Instance.IsFadingOut())
+            {
+                FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.Button);
+                FadeToBlack.Instance.FadeOutToScene(2.5f, sceneName);
             }
         }
     }

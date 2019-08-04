@@ -2,6 +2,7 @@ public class Songs
 {
 	public enum SongName
 	{
-		AnotherDay = 239,
+		Title = 2,
+		MainGame = 255,
 	}
 }
