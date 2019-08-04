@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: 1f2020c54541347ff905b2322a0abe51
+guid: 0220eec6b4b59b24ba1ca13ac459362d
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -3800051347667738634
-    second: Stand.160_160_0
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -77,7 +74,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Stand.160_160_0
+      name: 0-0
       rect:
         serializedVersion: 2
         x: 0
@@ -89,10 +86,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 0e5512af040664bd883f18501b2ab6c2
-      internalID: -3800051347667738634
+      spriteID: 
+      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -100,7 +97,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 741b42d1d2d894789b82a9b97ac599bb
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
