@@ -6,20 +6,24 @@ using UnityEngine;
 public class BoardParser : MonoBehaviour {
     public Node Node;
 
-    public Tile Floor;
-    public Tile ConsumeFloor;
-    public Tile Void;
-
-    public Tile TopLeftPipe;
-    public Tile TopRightPipe;
-    public Tile BottomRightPipe;
-    public Tile BottomLeftPipe;
-
-    public Entity Player;
+    [Header("Entities")] public Entity Player;
     public Entity NoMoveEnemy;
     public Entity StandardMoveEnemy;
     public Entity EveryOtherStandardMoveEnemy;
     public Entity InverseMoveEnemy;
+
+    [Header("Floor Tile")] public Tile Floor;
+    [Header("Consume Tile")] public Tile ConsumeFloor;
+    public List<Sprite> ConsumeFloorSprites;
+    [Header("Void Tile")] public Tile Void;
+    public List<Sprite> VoidSprites;
+    [Header("Wall Tile")] public Tile Wall;
+    public List<Sprite> WallSprites;
+
+    [Header("Pipes")] public Tile TopLeftPipe;
+    public Tile TopRightPipe;
+    public Tile BottomRightPipe;
+    public Tile BottomLeftPipe;
 
     public BoardStep ParseBoard(string levelFileContents, float tileWidth, float tileHeight) {
         BoardStep initialBoard = new BoardStep();
@@ -47,6 +51,7 @@ public class BoardParser : MonoBehaviour {
                     // Void Node
                     case '#':
                         newTile = Instantiate(Void);
+                        newTile.SetSprite(edgePicker(VoidSprites, lines, y, x));
                         newTile.transform.parent = newNode.transform;
                         newTile.transform.localPosition = new Vector3();
                         newNode.tile = newTile;
@@ -133,6 +138,15 @@ public class BoardParser : MonoBehaviour {
                     // Consume Floor Node
                     case '&':
                         newTile = Instantiate(ConsumeFloor);
+                        newTile.SetSprite(edgePicker(ConsumeFloorSprites, lines, y, x));
+                        newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
+                        newNode.tile = newTile;
+                        break;
+                    // Wall node
+                    case 'H':
+                        newTile = Instantiate(Wall);
+                        newTile.SetSprite(edgePicker(WallSprites, lines, y, x));
                         newTile.transform.parent = newNode.transform;
                         newTile.transform.localPosition = new Vector3();
                         newNode.tile = newTile;
@@ -170,7 +184,7 @@ public class BoardParser : MonoBehaviour {
 
                         break;
                     default:
-                        throw new Exception("YOU DONE BROKE THE GGAME WITH YOUR DUMB CSV FILER!");
+                        throw new Exception("YOU DONE BROKE THE GAME WITH YOUR DUMB CSV FILER!");
                 }
 
                 newNode.transform.parent = gameObject.transform;
@@ -179,5 +193,22 @@ public class BoardParser : MonoBehaviour {
         }
 
         return initialBoard;
+    }
+
+    private Sprite edgePicker(List<Sprite> sprites, List<string> lines, int row, int column) {
+        int mask = 0;
+        char ascii = lines[row][column];
+        if (row - 1 >= 0 && lines[row - 1][column] == ascii) mask |= Edge.BOTTOM;
+        if (row + 1 < lines.Count && lines[row + 1][column] == ascii) mask |= Edge.TOP;
+        if (column - 1 >= 0 && lines[row][column - 1] == ascii) mask |= Edge.LEFT;
+        if (column + 1 < lines[row].Length && lines[row][column + 1] == ascii) mask |= Edge.RIGHT;
+        return sprites[mask];
+    }
+
+    private static class Edge {
+        public const int TOP = 1;
+        public const int RIGHT = 2;
+        public const int BOTTOM = 4;
+        public const int LEFT = 8;
     }
 }
