@@ -10,4 +10,5 @@ public class SFX
 	public const string Button = "Button";
 	public const string Pipe = "Pipe";
 	public const string NesStep = "NesStep";
+	public const string Success = "Success";
 }

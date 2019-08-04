@@ -2,6 +2,7 @@
 {
     public enum Parameters
     {
-        LowPass = 247002279
+        LowPass = 247002279,
+        Finale = 247002271
     }
 }

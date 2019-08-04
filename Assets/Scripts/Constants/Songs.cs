@@ -4,5 +4,6 @@ public class Songs
 	{
 		Title = 2,
 		MainGame = 255,
+		TitleNoSoundClip = 80,
 	}
 }
