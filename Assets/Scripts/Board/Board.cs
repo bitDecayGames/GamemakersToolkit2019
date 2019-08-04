@@ -170,24 +170,42 @@ public class Board : MonoBehaviour {
 
         VectorSet CollidedEntityCoords = CollisionCheck(AllEntityPastCoords, CyclicCheckCoords.vecs);
 
-        // for(int i = 0; i < CyclicCheckCoords.Count; i++)
-        // {
-        //     Debug.Log("Entity Past Coord: " + AllEntityPastCoords[i].x + ", " + AllEntityPastCoords[i].y);
-        //     Debug.Log("Entity Cyclic Coord: " + CyclicCheckCoords[i].x + ", " + CyclicCheckCoords[i].y);
-        // }
-        // foreach (Vector2 coord in CollidedEntityCoords)
-        // {
-        //     Debug.Log("Entity Collision Coord: " + coord.x + ", " + coord.y);
-        // }
+        // Player moved into ingredient check
+        GameOverStatus playerTouchedIngredient = null;
+        List<Vector2> playerCoord = FindEntityCoords("Player");
+        int playerIndex = AllEntityPastCoords.IndexOf(playerCoord[0]);
+        Vector2 playerFutureCoord = FutureEntityCoords[playerIndex];
 
-        //Debug.Log("We get here");
-        //Debug.Log("All entity pst crod" + AllEntityPastCoords.Count);
+        int playerCoordCount = 0;
+        for (int i = 0; i < CyclicCheckCoords.vecs.Count; i++)
+        {
+            if(playerIndex != i && playerFutureCoord == CyclicCheckCoords.vecs[i])
+            {
+                playerCoordCount++;
+            }
+        }
+        Debug.Log("PLayer coord Count: " + playerCoordCount);
+        if (playerCoordCount >= 1) {
+            // Player is running into something baddo
+            Debug.Log("We lost from the touched ingredient reason");
+            playerTouchedIngredient = new GameOverStatus(GameOverReason.TOUCHED_INGREDIENT);
+        }
+
+
+        if (CollidedEntityCoords != null && CollidedEntityCoords.status != null)
+        {
+            if (CollidedEntityCoords.status.win)
+            {
+                foreach (Vector2 coord in CollidedEntityCoords.vecs)
+                {
+                    Debug.Log("Collided entity coords: " + coord.x + ", " + coord.y);
+                }
+            }
+        }
 
         BoardStep latestBoardStep = GetLatestBoardStep();
 
         for (int i = 0; i < AllEntityPastCoords.Count; i++) {
-            //Debug.Log("Entity Past Coord: " + AllEntityPastCoords[i].x + ", " + AllEntityPastCoords[i].y);
-            //Debug.Log("Entity Cyclic Coord: " + CyclicCheckCoords.vecs[i].x + ", " + CyclicCheckCoords.vecs[i].y);
 
             var entity = latestBoardStep[(int) AllEntityPastCoords[i].y][(int) AllEntityPastCoords[i].x].entity;
             Node newNode = newBoardStep[(int) CyclicCheckCoords.vecs[i].y][(int) CyclicCheckCoords.vecs[i].x];
@@ -205,12 +223,17 @@ public class Board : MonoBehaviour {
 
         // Create a gameoverstate or return null without one
         GameOverStatus finalStatus = CyclicCheckCoords.status;
+
         if (finalStatus == null) {
             finalStatus = CollidedEntityCoords.status;
         }
 
         if (finalStatus == null) {
             finalStatus = SpikeCoords.status;
+        }
+
+        if (finalStatus == null) {
+            finalStatus = playerTouchedIngredient;
         }
 
         return finalStatus;
@@ -267,7 +290,13 @@ public class Board : MonoBehaviour {
         VectorSet result = new VectorSet();
         List<Vector2> FinalCoordList = new List<Vector2>();
 
-        List<Vector2> playerCoord = FindEntityCoords("Player");
+        for (int i = 0; i < FutureCoords.Count; i++)
+        {
+            Debug.Log("Entity: " + i);
+            Debug.Log("Past coord: " + PastCoords[i].x + ", " + PastCoords[i].y);
+            Debug.Log("Future coord: " + FutureCoords[i].x + ", " + FutureCoords[i].y);
+        }
+
 
         for (int i = 0; i < FutureCoords.Count; i++) {
             int cyclicCount = 0;
@@ -276,14 +305,15 @@ public class Board : MonoBehaviour {
             while (true) {
                 int matchedPastIndex = PastCoords.IndexOf(FutureCoords[checkingIndex]);
                 if (matchedPastIndex != -1) {
-                    if (playerCoord[0] == PastCoords[i]) {
-                        // Player is running into something baddo
-                        result.status = new GameOverStatus(GameOverReason.TOUCHED_INGREDIENT);
-                    }
+
+                    Debug.Log("We matched coords on index: " + matchedPastIndex);
+                    Debug.Log("Past coord: " + PastCoords[checkingIndex].x + ", " + PastCoords[checkingIndex].y);
+                    Debug.Log("Future coord: " + FutureCoords[checkingIndex].x + ", " + FutureCoords[checkingIndex].y);
 
                     cyclicCount++;
                     if (cyclicList.Contains(matchedPastIndex)) {
                         if (matchedPastIndex != i || cyclicCount == 2) {
+                            Debug.Log("We have short cycle or cyclic count == 2");
                             FinalCoordList.Add(PastCoords[i]);
                         } else {
                             FinalCoordList.Add(FutureCoords[i]);
