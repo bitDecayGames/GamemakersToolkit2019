@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public class LevelContent {
     public static List<string> levels = new List<string> {
+            
         @"
 HHHHHHHHHHHHHHHHHHHHHHHH
 H######################H
@@ -180,6 +181,22 @@ HHHHHHHHHHHHHHHHHHHHHHH
 
 
 ",
+            
+        @"
+
+HHHHHHHHHHHH
+H##########H
+H##..######H
+H##..P..H##H
+H##HHHH.H##H
+H##..iH&H##H
+H##.H.H.H##H
+H##.....H##H
+H##########H
+H##########H
+HHHHHHHHHHHH
+
+",
         @"
 
 ###################################
@@ -285,6 +302,21 @@ H##############H
 H####[#[#]###]#H
 H##############H
 HHHHHHHHHHHHHHHH
+
+",
+        @"
+
+HHHHHHHHHHHHH
+H###########H
+H###..######H
+H#{#..P..H##H
+H###HHHH.H##H
+H###..iH&H##H
+H###.H.H.H##H
+H#[#..o..H##H
+H###########H
+H###########H
+HHHHHHHHHHHHH
 
 ",
         @"

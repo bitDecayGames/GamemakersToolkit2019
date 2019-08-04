@@ -120,6 +120,7 @@ public class overlord : MonoBehaviour {
                     if (CurrentLevelNumber.Instance.LevelNumber + 1 >= LevelContent.levels.Count) {
                         // they won the entire game!
                         goToScene("Credits");
+                        FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.Finale, 1);
                     } else {
                         CurrentLevelNumber.Instance.LevelNumber += 1;
                         if (NextLevelOverride != null && NextLevelOverride.Length > 0) {
