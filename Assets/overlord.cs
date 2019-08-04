@@ -91,8 +91,11 @@ public class overlord : MonoBehaviour {
             }
             else
             {
-                //when not in throw mode, past directional input as movement
-                status = Board.NextBoardState(input);
+                if (Board.RequestedMoveValid(input))
+                {
+                    //when not in throw mode, past directional input as movement
+                    status = Board.NextBoardState(input);
+                }
             }
         }
 
