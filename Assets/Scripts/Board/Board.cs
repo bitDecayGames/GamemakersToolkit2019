@@ -107,7 +107,7 @@ public class Board : MonoBehaviour
                 GameObject tempEntity = BoardSteps[latest][y][x].GetComponent<Node>().entity;
                 if(tempEntity != null)
                 {
-                    Debug.Log("temp entity: " + tempEntity.GetComponent<Entity>().Name);
+                    //Debug.Log("temp entity: " + tempEntity.GetComponent<Entity>().Name);
                     entityCoords.Add(new Vector2(x, y));
                 }
             }
@@ -191,6 +191,7 @@ public class Board : MonoBehaviour
                 blankNode.name = BoardSteps.Count + "Node(" + x + ", " + y + ")";
 
                 blankNode.GetComponent<Node>().tile = latestBoardStep[y][x].GetComponent<Node>().tile;
+                blankNode.GetComponent<Node>().ascii = latestBoardStep[y][x].GetComponent<Node>().ascii;
                 latestBoardStep[y][x].GetComponent<Node>().tile.transform.parent = blankNode.transform;
 
                 blankNode.transform.parent = gameObject.transform;
@@ -228,15 +229,15 @@ public class Board : MonoBehaviour
         //     Debug.Log("Entity Collision Coord: " + coord.x + ", " + coord.y);
         // }
 
-        Debug.Log("We get here");
-        Debug.Log("All entity pst crod" + AllEntityPastCoords.Count);
+        //Debug.Log("We get here");
+        //Debug.Log("All entity pst crod" + AllEntityPastCoords.Count);
 
         List<List<GameObject>> latestBoardStep = GetLatestBoardStep();
 
         for(int i = 0; i < AllEntityPastCoords.Count; i++)
         {
-            Debug.Log("Entity Past Coord: " + AllEntityPastCoords[i].x + ", " + AllEntityPastCoords[i].y);
-            Debug.Log("Entity Cyclic Coord: " + CyclicCheckCoords.vecs[i].x + ", " + CyclicCheckCoords.vecs[i].y);
+            //Debug.Log("Entity Past Coord: " + AllEntityPastCoords[i].x + ", " + AllEntityPastCoords[i].y);
+            //Debug.Log("Entity Cyclic Coord: " + CyclicCheckCoords.vecs[i].x + ", " + CyclicCheckCoords.vecs[i].y);
 
             GameObject entity = latestBoardStep[(int)AllEntityPastCoords[i].y][(int)AllEntityPastCoords[i].x].GetComponent<Node>().entity;
             Node newNode = newBoardStep[(int)CyclicCheckCoords.vecs[i].y][(int)CyclicCheckCoords.vecs[i].x].GetComponent<Node>();
