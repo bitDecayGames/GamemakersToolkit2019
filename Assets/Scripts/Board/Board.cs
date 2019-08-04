@@ -14,6 +14,11 @@ public class Board : MonoBehaviour
     public GameObject ConsumeFloor;
     public GameObject Void;
 
+    public GameObject TopLeftPipe;
+    public GameObject TopRightPipe;
+    public GameObject BottomRightPipe;
+    public GameObject BottomLeftPipe;
+
     public GameObject Player;
     public GameObject NoMoveEnemy;
     public GameObject StandardMoveEnemy;
@@ -343,6 +348,14 @@ public class Board : MonoBehaviour
         return result;
     }
 
+    void setCameraLocation(int columns, int rows)
+    {
+        float boardWidth = (columns* TileWidth) /2;
+        float boardHeight = (rows* TileHeight) /2;
+        var cam = GameObject.FindObjectOfType<Camera>();
+        cam.transform.position = new Vector3(boardWidth, boardHeight, cam.transform.position.z);
+    }
+
     // void Undo()
     // {
 
@@ -364,9 +377,10 @@ public class Board : MonoBehaviour
             if (allLines[i].Length == 0) continue;
             lines.Add(allLines[i]);
         }
-        
-        
-        for(int y = 0; y < lines.Count; y++)
+
+        setCameraLocation(lines.Count, lines[0].Length);
+
+        for (int y = 0; y < lines.Count; y++)
         {
             if(lines[y].Length == 0) continue;
 
@@ -477,11 +491,32 @@ public class Board : MonoBehaviour
                         newNode.GetComponent<Node>().tile = newTile;
                         break;
                     case '{':
+                        // For reflectors, not ready yet, just use floor for now
+                        newTile = Instantiate(TopLeftPipe);
+                        newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
+                        newNode.GetComponent<Node>().tile = newTile;
+
+                        break;
                     case '}':
+                        // For reflectors, not ready yet, just use floor for now
+                        newTile = Instantiate(TopRightPipe);
+                        newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
+                        newNode.GetComponent<Node>().tile = newTile;
+
+                        break;
                     case '[':
+                        // For reflectors, not ready yet, just use floor for now
+                        newTile = Instantiate(BottomLeftPipe);
+                        newTile.transform.parent = newNode.transform;
+                        newTile.transform.localPosition = new Vector3();
+                        newNode.GetComponent<Node>().tile = newTile;
+
+                        break;
                     case ']':
                         // For reflectors, not ready yet, just use floor for now
-                        newTile = Instantiate(Floor);
+                        newTile = Instantiate(BottomRightPipe);
                         newTile.transform.parent = newNode.transform;
                         newTile.transform.localPosition = new Vector3();
                         newNode.GetComponent<Node>().tile = newTile;
