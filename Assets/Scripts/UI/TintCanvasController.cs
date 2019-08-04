@@ -82,7 +82,7 @@ public class TintCanvasController : MonoBehaviour {
             case GameOverReason.DIDNT_SKEWER_ALL_INGREDIENTS:
                 return "Some Ingredients didn't get skewered!";
             case GameOverReason.DROPPED_INGREDIENT_IN_WATER:
-                return "An Ingredient got wet. Dinner is ruined!";
+                return "Drowning isn't good for you or your ingredients!";
             case GameOverReason.SKEWERD_YOURSELF:
                 return "Um, try not to kill yourself.";
             case GameOverReason.SMOOSHED_INGREDIENTS:
