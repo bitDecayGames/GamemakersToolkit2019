@@ -37,25 +37,25 @@ public class overlord : MonoBehaviour {
         bool gotInput = false;
         Vector2 input = new Vector2();
         if (acceptingInput && _lockoutDuration <= 0) {
-            if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
                 input = Directions.North;
                 gotInput = true;
                 _lockoutDuration = InputLockoutDuration;
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            if (Input.GetKeyDown(KeyCode.DownArrow)|| Input.GetKeyDown(KeyCode.S)) {
                 input = Directions.South;
                 gotInput = true;
                 _lockoutDuration = InputLockoutDuration;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) {
                 input = Directions.West;
                 gotInput = true;
                 _lockoutDuration = InputLockoutDuration;
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) {
                 input = Directions.East;
                 gotInput = true;
                 _lockoutDuration = InputLockoutDuration;
