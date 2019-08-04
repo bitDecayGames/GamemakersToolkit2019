@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utils;
 
 public class overlord : MonoBehaviour {
+
+    [Header("Be careful!!!")]
+    [Tooltip("Don't modify this unless you are in a test level, or set it back to '' after you are done at least")]
+    public String NextLevelOverride = "";
+    
+    
     private bool inSkewerThrowMode = false;
     private bool acceptingInput = true;
 
@@ -99,8 +103,12 @@ public class overlord : MonoBehaviour {
                         // they won the entire game!
                         goToScene("Credits");
                     } else {
-                        CurrentLevelNumber.Instance.LevelNumber += 1;
-                        goToScene(SceneManager.GetActiveScene().name);
+                        if (NextLevelOverride != null && NextLevelOverride.Length > 0) {
+                            goToScene(NextLevelOverride);
+                        } else {
+                            CurrentLevelNumber.Instance.LevelNumber += 1;
+                            goToScene(SceneManager.GetActiveScene().name);
+                        }
                     }
                 });
             } else {

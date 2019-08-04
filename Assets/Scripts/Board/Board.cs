@@ -361,8 +361,9 @@ public class Board : MonoBehaviour {
     // }
     void ParseLevel() {
         List<List<GameObject>> initialBoard = new List<List<GameObject>>();
-        
-        string levelFileContents = LevelContent.levels[LevelNumberOverride >= 0 ? LevelNumberOverride : CurrentLevelNumber.Instance.LevelNumber];
+
+        if (LevelNumberOverride >= 0) CurrentLevelNumber.Instance.LevelNumber = LevelNumberOverride;
+        string levelFileContents = LevelContent.levels[CurrentLevelNumber.Instance.LevelNumber];
         string[] allLines = Regex.Split(levelFileContents, "\n|\r|\r|\n");
         List<string> lines = new List<string>();
         for (int i = allLines.Length - 1; i >= 0; i--) {
