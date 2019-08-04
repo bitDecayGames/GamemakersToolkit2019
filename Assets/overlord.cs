@@ -30,7 +30,7 @@ public class overlord : MonoBehaviour {
         // allow the player to quit to menu at any point
         if (Input.GetKeyDown(KeyCode.Escape)) {
             //quits the game to menu
-            goToScene("MainMenu");
+            goToScene("TitleScreen");
         }
         
         //some timer controlling acceptingInput
