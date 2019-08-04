@@ -1,8 +1,13 @@
 using System;
 using UnityEngine;
 
-public class MyAnimationCtrl : MonoBehaviour {
+public class PlayerAnimationCtrl : MonoBehaviour {
     public Animator anim;
+
+    private int walkUpIndex;
+    private int walkDownIndex;
+    private int walkRightIndex;
+    private int walkLeftIndex;
     
     private void Start() {
         anim = GetComponentInChildren<Animator>();
@@ -10,22 +15,30 @@ public class MyAnimationCtrl : MonoBehaviour {
     
     // TODO: hook up the correct animation names
     public void Animate(Vector2 dir) {
-        
         if (isZero(dir.x) && isPos(dir.y)) {
             // north
-            anim.Play("North_Move");
+            Debug.Log($"Playing {"WalkUp" + (walkUpIndex % 2 + 1)}");
+            anim.Play("WalkUp" + (walkUpIndex++ % 2 + 1));
         } else if (isZero(dir.x) && isNeg(dir.y)) {
             // south
-            anim.Play("South_Move");
+            Debug.Log($"Playing {"WalkDown" + (walkDownIndex % 2 + 1)}");
+            anim.Play("WalkDown" + (walkDownIndex++ % 2 + 1));
         } else if (isPos(dir.x) && isZero(dir.y)) {
             // east
-            anim.Play("East_Move");
+            Debug.Log($"Playing {"WalkRight" + (walkRightIndex % 2 + 1)}");
+            anim.Play("WalkRight" + (walkRightIndex++ % 2 + 1));
         } else if (isNeg(dir.x) && isZero(dir.y)) {
             // west
-            anim.Play("West_Move");
+            Debug.Log($"Playing {"WalkLeft" + (walkLeftIndex % 2 + 1)}");
+            anim.Play("WalkLeft" + (walkLeftIndex++ % 2 + 1));
         } else if (isZero(dir.x) && isZero(dir.y)) {
             // none
+            Debug.Log("Playing nothing");
             anim.Play("None");
+        }
+        else
+        {
+            Debug.Log("Hit a mystery zone");
         }
     }
 
@@ -34,10 +47,10 @@ public class MyAnimationCtrl : MonoBehaviour {
     }
 
     public bool isPos(float f) {
-        return f > 0 && Math.Abs(1 - f) < 0.001f;
+        return f > 0;
     }
 
     public bool isNeg(float f) {
-        return f < 0 && Math.Abs(1 - f) < 0.001f;
+        return f < 0;
     }
 }

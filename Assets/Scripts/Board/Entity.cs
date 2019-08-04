@@ -3,30 +3,28 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour {
     [HideInInspector] public IMovementBehavior movementbehavior;
-    [HideInInspector] public MyAnimationCtrl animator;
-    [HideInInspector] public PlayerAnimationCtrl playerAnimator;
+    [HideInInspector] public MyAnimationCtrl MyAnimator;
+    [HideInInspector] public PlayerAnimationCtrl PlayerAnimator;
     [HideInInspector] public LerpAnimator lerper;
 
     public string Name;
 
     private void Start() {
         movementbehavior = GetComponent<IMovementBehavior>();
-        animator = GetComponent<MyAnimationCtrl>();
-        playerAnimator = GetComponent<PlayerAnimationCtrl>();
+        MyAnimator = GetComponent<MyAnimationCtrl>();
+        PlayerAnimator = GetComponent<PlayerAnimationCtrl>();
         lerper = GetComponent<LerpAnimator>();
     }
 
     public void Move(Vector3 destination, float time, Action callback) {
-        Vector2 dir = new Vector2(destination.x, destination.y);
-        dir.Normalize();
-        if (animator != null)
+        Vector2 dir = new Vector2(destination.x-transform.position.x, destination.y-transform.position.y);
+        if (MyAnimator != null)
         {
-            animator.Animate(dir);
+            MyAnimator.Animate(dir);
         }
-        animator.Animate(dir);
-        if (playerAnimator != null)
+        if (PlayerAnimator != null)
         {
-            playerAnimator.Animate(dir);
+            PlayerAnimator.Animate(dir);
         }
         lerper.Begin(transform.position, destination, time, callback);
     }

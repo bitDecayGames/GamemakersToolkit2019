@@ -92,7 +92,7 @@ Animator:
   m_GameObject: {fileID: 2677984969650921367}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6926df173660f4e318297688699edf9a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -113,8 +113,7 @@ GameObject:
   - component: {fileID: 5833944350268302050}
   - component: {fileID: 979939499479639708}
   - component: {fileID: 6282919376337112280}
-  - component: {fileID: 409415822696971150}
-  - component: {fileID: 5844135470587732906}
+  - component: {fileID: -3479392011197112650}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -161,7 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf63a3d48916144094271377117ff35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  MyAnimator: {fileID: 0}
+  PlayerAnimator: {fileID: 0}
   lerper: {fileID: 0}
   Name: Player
 --- !u!114 &6282919376337112280
@@ -176,19 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84025ed357354c96a738a1c139dd2fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &409415822696971150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3231074217552719825}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ac6bf98449d141239a400a7ecc3dcc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5844135470587732906
+--- !u!114 &-3479392011197112650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,6 +185,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3231074217552719825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd85234354642098ffb8f625fcf0417, type: 3}
+  m_Script: {fileID: 11500000, guid: f8b226be14584252bfcc679703932959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
