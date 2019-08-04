@@ -192,7 +192,6 @@ public class Board : MonoBehaviour {
 
         VectorSet CollidedEntityCoords = CollisionCheck(AllEntityPastCoords, CyclicCheckCoords.vecs);
 
-
         // for(int i = 0; i < CyclicCheckCoords.Count; i++)
         // {
         //     Debug.Log("Entity Past Coord: " + AllEntityPastCoords[i].x + ", " + AllEntityPastCoords[i].y);
@@ -220,6 +219,9 @@ public class Board : MonoBehaviour {
 
             entity.GetComponent<Entity>().Move(newNode.entity.transform.position, 1, () => { });
         }
+        
+        VectorSet SpikeCoords = SpikeTileCheck(newBoardStep);
+
 
         DestroyBoardStepNodes(latestBoardStep);
         BoardSteps.Add(newBoardStep);
@@ -230,8 +232,9 @@ public class Board : MonoBehaviour {
             finalStatus = CollidedEntityCoords.status;
         }
 
-        if (finalStatus != null) {
-            Debug.Log("WE HAVE FAILED");
+        if (finalStatus == null)
+        {
+            finalStatus = SpikeCoords.status;
         }
 
         return finalStatus;
@@ -266,7 +269,31 @@ public class Board : MonoBehaviour {
         return result;
     }
 
-    VectorSet CyclicCheck(List<Vector2> PastCoords, List<Vector2> FutureCoords) {
+    VectorSet SpikeTileCheck(List<List<GameObject>> boardState)
+    {
+        var result = new VectorSet();
+        result.vecs = new List<Vector2>();
+        for (int y = 0; y < boardState.Count; y++)
+        {
+            for (int x = 0; x < boardState[y].Count; x++)
+            {
+                var node = boardState[y][x].GetComponent<Node>();
+                if (node.ascii == "&")
+                {
+                    if (node.entity != null)
+                    {
+                        result.vecs.Add(new Vector2(x, y));
+                        result.status = new GameOverStatus(GameOverReason.DROPPED_INGREDIENT_IN_WATER);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    VectorSet CyclicCheck (List<Vector2> PastCoords, List<Vector2> FutureCoords)
+    {
         VectorSet result = new VectorSet();
         List<Vector2> FinalCoordList = new List<Vector2>();
 
@@ -337,8 +364,9 @@ public class Board : MonoBehaviour {
 
         setCameraLocation(lines.Count, lines[0].Length);
 
-        for (int y = 0; y < lines.Count; y++) {
-            if (lines[y].Length == 0) continue;
+        for (int y = 0; y < lines.Count; y++)
+        {
+            if(lines[y].Length == 0) continue;
 
             initialBoard.Add(new List<GameObject>());
 

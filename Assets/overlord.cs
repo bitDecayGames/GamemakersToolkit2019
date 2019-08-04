@@ -78,9 +78,11 @@ public class overlord : MonoBehaviour {
             if (inSkewerThrowMode) {
                 status = Board.ThrowSkewer(input);
                 inSkewerThrowMode = false;
-                acceptingInput = false;
-            } else {
-                if (Board.RequestedMoveValid(input)) {
+            }
+            else
+            {
+                if (Board.RequestedMoveValid(input))
+                {
                     //when not in throw mode, past directional input as movement
                     status = Board.NextBoardState(input);
                 }
@@ -90,6 +92,8 @@ public class overlord : MonoBehaviour {
         if (status != null) {
             var endGamePlayer = FindObjectOfType<TintCanvasController>();
             if (endGamePlayer == null) throw new Exception("We forgot to put the TintCanvasController on the scene, whoops...");
+            acceptingInput = false;
+
             if (status.win) {
                 //player won
                 endGamePlayer.Success(() => {
