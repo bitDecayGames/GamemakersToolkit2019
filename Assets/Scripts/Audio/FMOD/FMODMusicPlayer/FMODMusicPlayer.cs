@@ -67,7 +67,7 @@ public partial class FMODMusicPlayer : MonoBehaviour
 		RESULT result = _eventInstance.getVolume(out tmpVolume, out CurrentVolumeReadOnly);
 		if (result != RESULT.OK)
 		{
-			Debug.Log("Unable to get volume of track: " + result);
+//			Debug.Log("Unable to get volume of track: " + result);
 		}
 
 		if (TriggerSongToStart)

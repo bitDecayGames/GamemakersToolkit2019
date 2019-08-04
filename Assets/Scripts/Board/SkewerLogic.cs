@@ -68,7 +68,6 @@ public static class SkewerLogic {
         List<Entity> skeweredIngredients = new List<Entity>();
 
         bool skeweredSelf = false;
-
         // while (is the next step on the board)
         while (curPosY + curDirY < nodes.Count && curPosY + curDirY >= 0 && curPosX + curDirX < nodes[curPosY].Count && curPosX + curDirX >= 0) {
             // this is the next step
@@ -90,7 +89,6 @@ public static class SkewerLogic {
                         curDirY = y;
                         path.Add(node.transform.position);
                     } else {
-                        // hit the back
                         break;
                     }
                 } else if (node.ascii == "}" || node.ascii == "[") {
@@ -102,7 +100,6 @@ public static class SkewerLogic {
                         curDirY = y;
                         path.Add(node.transform.position);
                     } else {
-                        // hit the back
                         break;
                     }
                 }

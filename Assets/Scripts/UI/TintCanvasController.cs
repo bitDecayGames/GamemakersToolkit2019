@@ -1,9 +1,9 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TintCanvasController : MonoBehaviour
-{
+public class TintCanvasController : MonoBehaviour {
     private const string SuccessDisplay = "Ka-nice!";
     private const string SuccessContinue = "Press Spacebar to proceed";
     private const string FailureDisplay = "Ka-failed...";
@@ -12,48 +12,57 @@ public class TintCanvasController : MonoBehaviour
     public Image Tint;
     public TextMeshProUGUI DisplayText;
     public TextMeshProUGUI ContinueText;
-    
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.W))
-        {
-            Reset();
+
+    private Action onSpace = null;
+
+    private Action onTimerEnd;
+    private float timer;
+
+    private void Update() {
+        if (onSpace != null) {
+            onSpace();
+            onSpace = null;
         }
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            Fail();
-        }
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            Success();
+
+        if (timer > 0) {
+            timer -= Time.deltaTime;
+            if (timer < 0 && onTimerEnd != null) {
+                onTimerEnd();
+                onTimerEnd = null;
+            }
         }
     }
 
-    private void Reset()
-    {
+    public void Reset() {
         Tint.enabled = false;
         DisplayText.enabled = false;
         ContinueText.enabled = false;
         FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.LowPass, 0);
     }
-    
-    private void Fail()
-    {
-        DisplayText.text = FailureDisplay;
-        ContinueText.text = FailureContinue;
-        Tint.enabled = true;
-        DisplayText.enabled = true;
-        ContinueText.enabled = true;
-        FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.LowPass, 1f);
+
+    public void Fail(Action onSpace) {
+        timer = 2;
+        onTimerEnd = () => {
+            this.onSpace = onSpace;
+            DisplayText.text = FailureDisplay;
+            ContinueText.text = FailureContinue;
+            Tint.enabled = true;
+            DisplayText.enabled = true;
+            ContinueText.enabled = true;
+            FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.LowPass, 1f);
+        };
     }
 
-    private void Success()
-    {
-        DisplayText.text = SuccessDisplay;
-        ContinueText.text = SuccessContinue;
-        Tint.enabled = true;
-        DisplayText.enabled = true;
-        ContinueText.enabled = true;
-        FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.LowPass, 1f);
+    public void Success(Action onSpace) {
+        timer = 2;
+        onTimerEnd = () => {
+            this.onSpace = onSpace;
+            DisplayText.text = SuccessDisplay;
+            ContinueText.text = SuccessContinue;
+            Tint.enabled = true;
+            DisplayText.enabled = true;
+            ContinueText.enabled = true;
+            FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.LowPass, 1f);
+        };
     }
 }

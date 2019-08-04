@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6798068932196939023}
   - component: {fileID: -4525722223837342353}
   - component: {fileID: -1182750708440718769}
+  - component: {fileID: 8133722771990878231}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -96,3 +97,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 0
   Board: {fileID: 6798068932196939023}
+--- !u!114 &8133722771990878231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234345325550852601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a8c9b44b404ba5b2fe4026ffb4ae2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
