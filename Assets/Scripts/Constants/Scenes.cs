@@ -20,7 +20,7 @@ public class Scenes
 	public const string Level10 = "Level10";
 	public const string TestGameUI = "TestGameUI";
 	public const string TestShootSkewer = "TestShootSkewer";
-	public const string Level11 = "Level11";
+	public const string Credits2 = "Credits2";
 	public enum SceneEnum
 	{
 		TitleScreen = 0,
@@ -41,7 +41,7 @@ public class Scenes
 		Level10 = 15,
 		TestGameUI = 16,
 		TestShootSkewer = 17,
-		Level11 = 18,
+		Credits2 = 18,
 	}
 	public static string GetSceneNameFromEnum(SceneEnum sceneEnum)
 	{
@@ -83,8 +83,8 @@ public class Scenes
 				return TestGameUI;
 			case SceneEnum.TestShootSkewer:
 				return TestShootSkewer;
-			case SceneEnum.Level11:
-				return Level11;
+			case SceneEnum.Credits2:
+				return Credits2;
 			default:
 				throw new Exception("Unable to resolve scene name for: " + sceneEnum);
 		}
