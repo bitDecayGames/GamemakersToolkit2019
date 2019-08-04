@@ -80,7 +80,32 @@ public static class SkewerLogic {
                 var entity = node.entity.GetComponent<Entity>();
                 skeweredIngredients.Add(entity);
             } else if (node.tile != null) {
-                // TODO: handle angle changers
+                // handle angle changers
+                if (node.ascii == "{" || node.ascii == "]") {
+                    if ((curDirX <= 0 && curDirY >= 0) || (curDirX >= 0 && curDirY <= 0)) {
+                        // flip
+                        var x = curDirY;
+                        var y = curDirX;
+                        curDirX = x;
+                        curDirY = y;
+                        path.Add(node.transform.position);
+                    } else {
+                        // hit the back
+                        break;
+                    }
+                } else if (node.ascii == "}" || node.ascii == "[") {
+                    if ((curDirX >= 0 && curDirY >= 0) || (curDirX <= 0 && curDirY <= 0)) {
+                        // flip
+                        var x = -curDirY;
+                        var y = -curDirX;
+                        curDirX = x;
+                        curDirY = y;
+                        path.Add(node.transform.position);
+                    } else {
+                        // hit the back
+                        break;
+                    }
+                }
             }
 
             if (curPosX == playerX && curPosY == playerY) skeweredSelf = true;
