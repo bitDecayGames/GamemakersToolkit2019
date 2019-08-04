@@ -8,4 +8,6 @@ public class SFX
 	public const string Step = "Step";
 	public const string Throw = "Throw";
 	public const string Button = "Button";
+	public const string Pipe = "Pipe";
+	public const string NesStep = "NesStep";
 }
