@@ -16,7 +16,7 @@ public class DestinationSlide : MonoBehaviour
         {
             if (transform.position != Destination)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Destination, .065f);
+                transform.position = Vector3.MoveTowards(transform.position, Destination, .055f);
             }
             else
             {
