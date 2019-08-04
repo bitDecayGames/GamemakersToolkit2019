@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class MyAnimationCtrl : MonoBehaviour {
+public class PlayerAnimationCtrl : MyAnimationCtrl {
     private Animator anim;
 
     private void Start() {
@@ -9,8 +9,8 @@ public class MyAnimationCtrl : MonoBehaviour {
     }
     
     // TODO: hook up the correct animation names
-    public void Animate(Vector2 dir) {
-        Debug.Log("Call is at the normal animation controller");
+    public new void Animate(Vector2 dir) {
+        Debug.Log("Call reached the custom animator class");
         
         if (isZero(dir.x) && isPos(dir.y)) {
             // north
