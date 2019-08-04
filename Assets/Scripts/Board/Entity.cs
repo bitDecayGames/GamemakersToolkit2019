@@ -1,19 +1,21 @@
 ﻿using System;
+using Boo.Lang.Environments;
 using UnityEngine;
 
 public class Entity : MonoBehaviour {
     [HideInInspector] public IMovementBehavior movementbehavior;
     [HideInInspector] public MyAnimationCtrl MyAnimator;
-    [HideInInspector] public PlayerAnimationCtrl PlayerAnimator;
     [HideInInspector] public LerpAnimator lerper;
 
     public string Name;
 
     private void Start() {
-        movementbehavior = GetComponent<IMovementBehavior>();
-        MyAnimator = GetComponent<MyAnimationCtrl>();
-        PlayerAnimator = GetComponent<PlayerAnimationCtrl>();
-        lerper = GetComponent<LerpAnimator>();
+        movementbehavior = GetComponentInChildren<IMovementBehavior>();
+        if (movementbehavior == null) throw new Exception("Missing IMovementBehavior on Entity: " + name);
+        MyAnimator = GetComponentInChildren<MyAnimationCtrl>();
+        if (MyAnimator == null) throw new Exception("Missing MyAnimationCtrl on Entity: " + name);
+        lerper = GetComponentInChildren<LerpAnimator>();
+        if (lerper == null) throw new Exception("Missing LerpAnimator on Entity: " + name);
     }
 
     public void Move(Vector3 destination, float time, Action callback) {
@@ -21,10 +23,6 @@ public class Entity : MonoBehaviour {
         if (MyAnimator != null)
         {
             MyAnimator.Animate(dir);
-        }
-        if (PlayerAnimator != null)
-        {
-            PlayerAnimator.Animate(dir);
         }
         lerper.Begin(transform.position, destination, time, callback);
     }

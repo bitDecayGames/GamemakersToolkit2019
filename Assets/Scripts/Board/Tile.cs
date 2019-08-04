@@ -1,21 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Tile: MonoBehaviour
-{
+public class Tile : MonoBehaviour {
     public string Name;
     public bool Standable;
+    public bool Solid;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void SetSprite(Sprite sprite) {
+        var sr = GetComponent<SpriteRenderer>();
+        sr.sprite = sprite;
     }
 }

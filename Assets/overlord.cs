@@ -22,26 +22,37 @@ public class overlord : MonoBehaviour {
     {
         _lockoutDuration -= Time.deltaTime;
         
+        // allow the player to restart at any time
+        if (Input.GetKeyDown(KeyCode.R)) {
+            Restart();
+        }
+        
+        // allow the player to quit to menu at any point
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            //quits the game to menu
+            goToScene("TitleScreen");
+        }
+        
         //some timer controlling acceptingInput
         bool gotInput = false;
         Vector2 input = new Vector2();
         if (acceptingInput && _lockoutDuration <= 0) {
-            if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
                 input = Directions.North;
                 gotInput = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            if (Input.GetKeyDown(KeyCode.DownArrow)|| Input.GetKeyDown(KeyCode.S)) {
                 input = Directions.South;
                 gotInput = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) {
                 input = Directions.West;
                 gotInput = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) {
                 input = Directions.East;
                 gotInput = true;
             }
@@ -51,14 +62,6 @@ public class overlord : MonoBehaviour {
             //    //un-does the previous move
             //    //Board.undo();
             //}
-
-            if (Input.GetKeyDown(KeyCode.R)) {
-                Restart();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                //quits the game to menu
-            }
 
             if (Input.GetKeyDown(KeyCode.P)) {
                 //unpause game if paused, otherwise pause
@@ -103,7 +106,6 @@ public class overlord : MonoBehaviour {
             if (status.win) {
                 //player won
                 endGamePlayer.Success(() => {
-                    Debug.Log("The user pressed space to go to the next scene");
                     endGamePlayer.Reset();
                     // Go to next level
                     if (CurrentLevelNumber.Instance.LevelNumber + 1 >= LevelContent.levels.Count) {
@@ -121,7 +123,6 @@ public class overlord : MonoBehaviour {
             } else {
                 //player lost 
                 endGamePlayer.Fail(() => {
-                    Debug.Log("The user pressed space to restart this level");
                     endGamePlayer.Reset();
                     // Restart this level
                     Restart();

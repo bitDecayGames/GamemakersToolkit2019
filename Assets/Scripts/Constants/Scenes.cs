@@ -8,16 +8,7 @@ public class Scenes
 	public const string GameJamSplash = "GameJamSplash";
 	public const string Test = "Test";
 	public const string TestKabobSpear = "TestKabobSpear";
-	public const string Level01 = "Level01";
-	public const string Level02 = "Level02";
-	public const string Level03 = "Level03";
-	public const string Level04 = "Level04";
-	public const string Level05 = "Level05";
-	public const string Level06 = "Level06";
-	public const string Level07 = "Level07";
-	public const string Level08 = "Level08";
-	public const string Level09 = "Level09";
-	public const string Level10 = "Level10";
+	public const string Tutorial01 = "Tutorial01";
 	public const string TestGameUI = "TestGameUI";
 	public const string TestShootSkewer = "TestShootSkewer";
 	public const string GameScene = "GameScene";
@@ -29,19 +20,10 @@ public class Scenes
 		GameJamSplash = 3,
 		Test = 4,
 		TestKabobSpear = 5,
-		Level01 = 6,
-		Level02 = 7,
-		Level03 = 8,
-		Level04 = 9,
-		Level05 = 10,
-		Level06 = 11,
-		Level07 = 12,
-		Level08 = 13,
-		Level09 = 14,
-		Level10 = 15,
-		TestGameUI = 16,
-		TestShootSkewer = 17,
-		GameScene = 18,
+		Tutorial01 = 6,
+		TestGameUI = 7,
+		TestShootSkewer = 8,
+		GameScene = 9,
 	}
 	public static string GetSceneNameFromEnum(SceneEnum sceneEnum)
 	{
@@ -59,26 +41,8 @@ public class Scenes
 				return Test;
 			case SceneEnum.TestKabobSpear:
 				return TestKabobSpear;
-			case SceneEnum.Level01:
-				return Level01;
-			case SceneEnum.Level02:
-				return Level02;
-			case SceneEnum.Level03:
-				return Level03;
-			case SceneEnum.Level04:
-				return Level04;
-			case SceneEnum.Level05:
-				return Level05;
-			case SceneEnum.Level06:
-				return Level06;
-			case SceneEnum.Level07:
-				return Level07;
-			case SceneEnum.Level08:
-				return Level08;
-			case SceneEnum.Level09:
-				return Level09;
-			case SceneEnum.Level10:
-				return Level10;
+			case SceneEnum.Tutorial01:
+				return Tutorial01;
 			case SceneEnum.TestGameUI:
 				return TestGameUI;
 			case SceneEnum.TestShootSkewer:
