@@ -26,6 +26,8 @@ namespace Utils {
                     instance.spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
                     instance.spriteRenderer.sprite = Resources.Load<Sprite>("Images/white_pixel");
                     instance.spriteRenderer.color = new Color(0,0,0,0);
+                    instance.spriteRenderer.sortingLayerName = "UI";
+                    instance.spriteRenderer.sortingOrder = 10000;
                     gameObject.name = "FadeToBlack";
                 }
 

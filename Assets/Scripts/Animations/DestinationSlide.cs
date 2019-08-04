@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DestinationSlide : MonoBehaviour
 {
-    public Transform Destination;
+    public Vector3 Destination = Vector3.zero;
 
     public bool done;
 
@@ -11,9 +11,9 @@ public class DestinationSlide : MonoBehaviour
     {
         if (!done)
         {
-            if (transform.position != Destination.position)
+            if (transform.position != Destination)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Destination.position, .05f);
+                transform.position = Vector3.MoveTowards(transform.position, Destination, .07f);
             }
             else
             {
