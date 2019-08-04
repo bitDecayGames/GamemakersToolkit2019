@@ -111,7 +111,7 @@ public class Board : MonoBehaviour
         return entityCoords;
     }
 
-    bool RequestedMoveValid(Vector2 direction)
+    public bool RequestedMoveValid(Vector2 direction)
     {
         int latest = BoardSteps.Count -1;
         List<Vector2> playerCoord = FindEntityCoords(Player.GetComponent<Entity>());
