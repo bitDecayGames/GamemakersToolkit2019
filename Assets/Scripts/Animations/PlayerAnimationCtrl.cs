@@ -17,28 +17,28 @@ public class PlayerAnimationCtrl : MonoBehaviour {
     public void Animate(Vector2 dir) {
         if (isZero(dir.x) && isPos(dir.y)) {
             // north
-            Debug.Log($"Playing {"WalkUp" + (walkUpIndex % 2 + 1)}");
+//            Debug.Log($"Playing {"WalkUp" + (walkUpIndex % 2 + 1)}");
             anim.Play("WalkUp" + (walkUpIndex++ % 2 + 1));
         } else if (isZero(dir.x) && isNeg(dir.y)) {
             // south
-            Debug.Log($"Playing {"WalkDown" + (walkDownIndex % 2 + 1)}");
+//            Debug.Log($"Playing {"WalkDown" + (walkDownIndex % 2 + 1)}");
             anim.Play("WalkDown" + (walkDownIndex++ % 2 + 1));
         } else if (isPos(dir.x) && isZero(dir.y)) {
             // east
-            Debug.Log($"Playing {"WalkRight" + (walkRightIndex % 2 + 1)}");
+//            Debug.Log($"Playing {"WalkRight" + (walkRightIndex % 2 + 1)}");
             anim.Play("WalkRight" + (walkRightIndex++ % 2 + 1));
         } else if (isNeg(dir.x) && isZero(dir.y)) {
             // west
-            Debug.Log($"Playing {"WalkLeft" + (walkLeftIndex % 2 + 1)}");
+//            Debug.Log($"Playing {"WalkLeft" + (walkLeftIndex % 2 + 1)}");
             anim.Play("WalkLeft" + (walkLeftIndex++ % 2 + 1));
         } else if (isZero(dir.x) && isZero(dir.y)) {
             // none
-            Debug.Log("Playing nothing");
+//            Debug.Log("Playing nothing");
             anim.Play("None");
         }
         else
         {
-            Debug.Log("Hit a mystery zone");
+//            Debug.Log("Hit a mystery zone");
         }
     }
 
