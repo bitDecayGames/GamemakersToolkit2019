@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 public class MyAnimationCtrl : MonoBehaviour {
-    private Animator anim;
+    public Animator anim;
 
     private void Start() {
         anim = GetComponentInChildren<Animator>();
@@ -30,15 +30,15 @@ public class MyAnimationCtrl : MonoBehaviour {
         }
     }
 
-    private bool isZero(float f) {
+    public bool isZero(float f) {
         return Math.Abs(f) < 0.001f;
     }
 
-    private bool isPos(float f) {
+    public bool isPos(float f) {
         return f > 0 && Math.Abs(1 - f) < 0.001f;
     }
 
-    private bool isNeg(float f) {
+    public bool isNeg(float f) {
         return f < 0 && Math.Abs(1 - f) < 0.001f;
     }
 }
