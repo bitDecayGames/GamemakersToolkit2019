@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine;
 
 public class Board : MonoBehaviour {
@@ -29,7 +30,7 @@ public class Board : MonoBehaviour {
 
     List<List<List<GameObject>>> BoardSteps = new List<List<List<GameObject>>>();
 
-    public const float TileHeight = 0.8f;
+    public const float TileHeight = 0.8f; // 80x80 => .8x.8
     public const float TileWidth = TileHeight;
 
     float xOffset;
@@ -335,11 +336,19 @@ public class Board : MonoBehaviour {
         return result;
     }
 
-    void setCameraLocation(int columns, int rows) {
-        float boardWidth = (columns * TileWidth) / 2;
-        float boardHeight = (rows * TileHeight) / 2;
-        var cam = FindObjectOfType<Camera>();
-        cam.transform.position = new Vector3(boardWidth, boardHeight, cam.transform.position.z);
+    private void setCameraLocation(Transform middlestNode) {
+        var cam = FindObjectOfType<ProCamera2D>();
+        var target = new CameraTarget();
+        target.TargetTransform = middlestNode;
+        cam.CameraTargets.Add(target);
+    }
+
+    private GameObject getTheMiddlestNode(List<List<GameObject>> nodes) {
+        var middleY = nodes.Count / 2;
+        var middleX = nodes[0].Count / 2;
+
+        // MW: sorry if this breaks... we suck, and we are tired
+        return nodes[middleY][middleX].GetComponent<Node>().tile;
     }
 
     // void Undo()
@@ -361,8 +370,6 @@ public class Board : MonoBehaviour {
             if (allLines[i].Length == 0) continue;
             lines.Add(allLines[i]);
         }
-
-        setCameraLocation(lines.Count, lines[0].Length);
 
         for (int y = 0; y < lines.Count; y++)
         {
@@ -512,6 +519,8 @@ public class Board : MonoBehaviour {
                 initialBoard[y].Add(newNode);
             }
         }
+        
+        setCameraLocation(getTheMiddlestNode(initialBoard).transform);
 
         BoardSteps.Add(initialBoard);
     }
