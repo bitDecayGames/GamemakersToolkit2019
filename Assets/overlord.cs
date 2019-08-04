@@ -31,6 +31,19 @@ public class overlord : MonoBehaviour {
     {
         _lockoutDuration -= Time.deltaTime;
         
+        if (Input.GetKeyDown(KeyCode.Equals)) {
+            NextLevel();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Minus)) {
+            PreviousLevel();
+        }
+        
+        // allow the player to restart at any time
+        if (Input.GetKeyDown(KeyCode.R)) {
+            Restart();
+        }
+        
         // allow the player to restart at any time
         if (Input.GetKeyDown(KeyCode.R)) {
             Restart();
@@ -121,12 +134,7 @@ public class overlord : MonoBehaviour {
                         // they won the entire game!
                         goToScene("Credits");
                     } else {
-                        CurrentLevelNumber.Instance.LevelNumber += 1;
-                        if (NextLevelOverride != null && NextLevelOverride.Length > 0) {
-                            goToScene(NextLevelOverride);
-                        } else {
-                            goToScene(SceneManager.GetActiveScene().name);
-                        }
+                        NextLevel();
                     }
                 });
             } else {
@@ -138,6 +146,23 @@ public class overlord : MonoBehaviour {
                 });
             }
         }
+    }
+
+    public void NextLevel() {
+        CurrentLevelNumber.Instance.LevelNumber += 1;
+        if (NextLevelOverride != null && NextLevelOverride.Length > 0) {
+            goToScene(NextLevelOverride);
+        } else {
+            Restart();
+        }
+    }
+    
+    public void PreviousLevel() {
+        if (CurrentLevelNumber.Instance.LevelNumber - 1 >= 0) {
+            CurrentLevelNumber.Instance.LevelNumber -= 1;
+        }
+
+        Restart();
     }
 
     public void Restart() {
