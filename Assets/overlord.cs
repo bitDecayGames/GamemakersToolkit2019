@@ -1,24 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utils;
 
 public class overlord : MonoBehaviour {
-    //current level
-    public int currentLevel;
-    private int nextLevel;
     private bool inSkewerThrowMode = false;
     private bool acceptingInput = true;
 
     public Board Board;
 
-    private void Start() {
-        nextLevel = currentLevel + 1;
-    }
-
-    // Update is called once per frame
     void Update() {
-
         //some timer controlling acceptingInput
         bool gotInput = false;
         Vector2 input = new Vector2();
@@ -74,25 +67,20 @@ public class overlord : MonoBehaviour {
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
+            if (Input.GetKeyDown(KeyCode.Space)) {
                 inSkewerThrowMode = true;
             }
         }
+
         GameOverStatus status = null;
         //Send input to board
-        if (gotInput)
-        {
-            if (inSkewerThrowMode)
-            {
+        if (gotInput) {
+            if (inSkewerThrowMode) {
                 status = Board.ThrowSkewer(input);
                 inSkewerThrowMode = false;
                 acceptingInput = false;
-            }
-            else
-            {
-                if (Board.RequestedMoveValid(input))
-                {
+            } else {
+                if (Board.RequestedMoveValid(input)) {
                     //when not in throw mode, past directional input as movement
                     status = Board.NextBoardState(input);
                 }
@@ -100,17 +88,32 @@ public class overlord : MonoBehaviour {
         }
 
         if (status != null) {
+            var endGamePlayer = FindObjectOfType<TintCanvasController>();
+            if (endGamePlayer == null) throw new Exception("We forgot to put the TintCanvasController on the scene, whoops...");
             if (status.win) {
-                Debug.Log("WE KAAAAA-WON!!!:" + status.reason);
                 //player won
-                //TODO :scene transition 
-                //SceneManager.LoadScene("Level" + nextLevel.ToString());
+                endGamePlayer.Success(() => {
+                    Debug.Log("The user pressed space to go to the next scene");
+                    endGamePlayer.Reset();
+                    // Go to next level
+                    CurrentLevelNumber.Instance.LevelNumber += 1;
+                    goToScene(SceneManager.GetActiveScene().name);
+                });
             } else {
-                Debug.Log("WE KAAAAA-LOST!!!:" + status.reason);
                 //player lost 
-                //TODO :scene transition 
-                //SceneManager.LoadScene("Level" + currentLevel.ToString());
+                endGamePlayer.Fail(() => {
+                    Debug.Log("The user pressed space to restart this level");
+                    endGamePlayer.Reset();
+                    // Restart this level
+                    goToScene(SceneManager.GetActiveScene().name);
+                });
             }
         }
+    }
+
+    private void goToScene(String sceneName) {
+        var nav = FindObjectOfType<EasyNavigator>();
+        if (nav == null) throw new Exception("We forgot to put the EasyNavigator here, our bad");
+        nav.GoToSceneWithSoundWithClick(sceneName);
     }
 }
