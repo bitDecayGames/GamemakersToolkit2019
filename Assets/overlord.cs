@@ -15,7 +15,7 @@ public class overlord : MonoBehaviour {
 
     public Board Board;
 
-    private const float InputLockoutDuration = .25f;
+    private const float InputLockoutDuration = .20f;
     private float _lockoutDuration;
     
     void Update()

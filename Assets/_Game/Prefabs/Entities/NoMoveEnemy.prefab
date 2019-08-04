@@ -68,9 +68,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1085758929
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7576874432042752839, guid: 92f653c6d9cc74763becd900fb39ab9f,
+  m_Sprite: {fileID: 7641124845627605941, guid: 92f653c6d9cc74763becd900fb39ab9f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf63a3d48916144094271377117ff35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  MyAnimator: {fileID: 0}
   lerper: {fileID: 0}
   Name: NoMoveEntity
 --- !u!114 &1010361267997993999
@@ -187,3 +187,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac6bf98449d141239a400a7ecc3dcc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
