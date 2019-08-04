@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkewerThrower : MonoBehaviour {
     private const float skewerCatchDistance = 0.2f;
-    private const float moveSpeed = 1f;
+    private const float moveSpeed = 20f;
     public Material Material;
 
     private LineRenderer _lineRenderer;
@@ -20,6 +20,8 @@ public class SkewerThrower : MonoBehaviour {
     private float tipPercent;
     private float tailPercent;
 
+    private float pointsLength;
+
     void Start() {
         _lineRenderer = gameObject.AddComponent<LineRenderer>();
         _lineRenderer.startWidth = 0.01f;
@@ -34,7 +36,7 @@ public class SkewerThrower : MonoBehaviour {
         
 
         if (isMoving) {
-            var moveSpeedDelta = moveSpeed * Time.deltaTime;
+            var moveSpeedDelta = moveSpeed * Time.deltaTime / pointsLength;
             tipPercent += moveSpeedDelta;
             if (tipPercent > 1) {
                 isMoving = false;
@@ -63,6 +65,7 @@ public class SkewerThrower : MonoBehaviour {
         tailPercent = 0;
         this.ingredients = ingredients;
         this.points = points;
+        pointsLength = lineLength(points);
         this.skewerLength = skewerLength;
         line = new List<Vector3>();
         ingredientSpots = new List<float>();
@@ -85,7 +88,7 @@ public class SkewerThrower : MonoBehaviour {
                 var ing = ingredients[i];
                 if (!skeweredIngredients.Contains(ing) && shouldSkewerIngredient(ing)) {
                     skeweredIngredients.Add(ing);
-                    // TODO: SFX ingredient got got
+                    // TODO: SFX ingredient got gotted
                 }
             }
         }
@@ -137,7 +140,7 @@ public class SkewerThrower : MonoBehaviour {
             if (cur > startTarget) points.Add(line[i + 1]);
         }
 
-        points.Reverse();
+        points.Reverse(); 
         return points;
     }
 
