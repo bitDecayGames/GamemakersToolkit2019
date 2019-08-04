@@ -130,13 +130,7 @@ public class overlord : MonoBehaviour {
                 //player won
                 endGamePlayer.Success(() => {
                     // Go to next level
-                    if (CurrentLevelNumber.Instance.LevelNumber + 1 >= LevelContent.levels.Count) {
-                        // they won the entire game!
-                        goToScene("Credits");
-                        FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.GoToFinale, 1);
-                    } else {
-                        NextLevel();
-                    }
+                    NextLevel();
                 });
             } else {
                 //player lost 
@@ -150,11 +144,16 @@ public class overlord : MonoBehaviour {
     }
 
     public void NextLevel() {
-        CurrentLevelNumber.Instance.LevelNumber += 1;
-        if (NextLevelOverride != null && NextLevelOverride.Length > 0) {
-            goToScene(NextLevelOverride);
+        if (CurrentLevelNumber.Instance.LevelNumber + 1 >= LevelContent.levels.Count) {
+            // they won the entire game!
+            GameFinished();
         } else {
-            Restart();
+            CurrentLevelNumber.Instance.LevelNumber += 1;
+            if (NextLevelOverride != null && NextLevelOverride.Length > 0) {
+                goToScene(NextLevelOverride);
+            } else {
+                Restart();
+            }
         }
     }
     
@@ -164,6 +163,12 @@ public class overlord : MonoBehaviour {
         }
 
         Restart();
+    }
+
+    public void GameFinished() {
+        // they won the entire game!
+        goToScene("Credits");
+        FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.GoToFinale, 1);
     }
 
     public void Restart() {
