@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 
 public class PlayerAnimationCtrl : MyAnimationCtrl {
@@ -27,11 +28,20 @@ public class PlayerAnimationCtrl : MyAnimationCtrl {
         }
     }
 
-    public void AnimateShoot(bool left) {
-        if (left) {
-            anim.Play("ThrowLeft_Down");
-        } else {
+    public void AnimateShoot(Vector2 dir) {
+        dir.Normalize();
+        if (isNorth(dir)) {
+            anim.Play("ThrowUp");
+        } else if (isSouth(dir)) {
+            anim.Play("ThrowDown");
+        } else if (isEast(dir)) {
             anim.Play("ThrowRight_Down");
+        } else if (isWest(dir)) {
+            anim.Play("ThrowLeft_Down");
+        } else if (isNone(dir)) {
+            Debug.LogWarning("This shouldn't happen: " + name);
+        } else {
+            Debug.LogWarning("Hit a mystery zone: " + name);
         }
     }
 }

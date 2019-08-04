@@ -849,7 +849,7 @@ PrefabInstance:
     - target: {fileID: -1182750708440718769, guid: 0acac440d8056914ba7c9caa91d8a567,
         type: 3}
       propertyPath: NextLevelOverride
-      value: 3
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0acac440d8056914ba7c9caa91d8a567, type: 3}

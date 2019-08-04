@@ -62,7 +62,7 @@ public class Board : MonoBehaviour {
 
     public GameOverStatus ThrowSkewer(Vector2 input) {
         // MW hack, but it kinda works...
-        FindObjectOfType<PlayerAnimationCtrl>().AnimateShoot(input.x < 0);
+        FindObjectOfType<PlayerAnimationCtrl>().AnimateShoot(input);
         return SkewerLogic.ShootSkewer(GetLatestBoardStep(), input, skewerThrower);
     }
 
