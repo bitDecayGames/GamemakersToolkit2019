@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3602952685857488235}
   - component: {fileID: 6798068932196939023}
+  - component: {fileID: -4525722223837342353}
+  - component: {fileID: -1182750708440718769}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -58,3 +60,31 @@ MonoBehaviour:
     type: 3}
   InverseMoveEnemy: {fileID: 3292647994188742288, guid: a52f0e4c5efb87441a20f08815868207,
     type: 3}
+  skewerThrower: {fileID: -4525722223837342353}
+--- !u!114 &-4525722223837342353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234345325550852601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86129325a387246e59cc2b6fc450eacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+--- !u!114 &-1182750708440718769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234345325550852601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9191c59da23654d867a62184ce91c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLevel: 0
+  Board: {fileID: 6798068932196939023}

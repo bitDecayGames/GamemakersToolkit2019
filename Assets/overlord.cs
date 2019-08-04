@@ -20,25 +20,30 @@ public class overlord : MonoBehaviour {
     void Update() {
 
         //some timer controlling acceptingInput
-
+        bool gotInput = false;
         Vector2 input = new Vector2();
         if (acceptingInput) {
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 input = Directions.North;
+                gotInput = true;
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow)) {
                 input = Directions.South;
+                gotInput = true;
             }
 
             if (Input.GetKeyDown(KeyCode.LeftArrow)) {
                 input = Directions.West;
+                gotInput = true;
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow)) {
                 input = Directions.East;
+                gotInput = true;
             }
 
+            //OUT OF SCOPE
             //if (Input.GetKeyDown(KeyCode.Backspace)) {
             //    //un-does the previous move
             //    //Board.undo();
@@ -74,33 +79,31 @@ public class overlord : MonoBehaviour {
                 inSkewerThrowMode = true;
             }
         }
-
+        GameOverStatus status = null;
         //Send input to board
-        if (inSkewerThrowMode)
+        if (gotInput)
         {
-            //Board.ThrowSkewer(input)
-            inSkewerThrowMode = false;
-            acceptingInput = false;
+            if (inSkewerThrowMode)
+            {
+                status = Board.ThrowSkewer(input);
+                inSkewerThrowMode = false;
+                acceptingInput = false;
+            }
+            else
+            {
+                //when not in throw mode, past directional input as movement
+                status = Board.NextBoardState(input);
+            }
         }
-        else
-        {
-            //when not in throw mode, past directional input as movement
-            //Board.movement(input);
-        }
 
-        //Did game end
-        //may need more meta data for the types of foods that were skewered on the level
-        //for better graphics on the win screen.
-        GameOverStatus gameOver = new GameOverStatus(GameOverReason.SKEWERD_YOURSELF);
-
-        //gameOver = Board.getGameOverStatus();
-
-        if (gameOver != null) {
-            if (gameOver.win) {
+        if (status != null) {
+            if (status.win) {
+                Debug.Log("WE KAAAAA-WON!!!:" + status.reason);
                 //player won
                 //TODO :scene transition 
                 //SceneManager.LoadScene("Level" + nextLevel.ToString());
             } else {
+                Debug.Log("WE KAAAAA-LOST!!!:" + status.reason);
                 //player lost 
                 //TODO :scene transition 
                 //SceneManager.LoadScene("Level" + currentLevel.ToString());
