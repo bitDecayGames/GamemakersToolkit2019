@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Wall
   Standable: 0
+  Solid: 1
 --- !u!212 &-6783888650607688689
 SpriteRenderer:
   m_ObjectHideFlags: 0

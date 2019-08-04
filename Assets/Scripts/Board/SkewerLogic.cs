@@ -97,6 +97,8 @@ public static class SkewerLogic {
                     } else {
                         break;
                     }
+                } else if (node.tile.Solid) {
+                    break;
                 }
             }
 
