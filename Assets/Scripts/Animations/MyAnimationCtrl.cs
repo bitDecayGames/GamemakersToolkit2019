@@ -12,22 +12,22 @@ public class MyAnimationCtrl : MonoBehaviour {
         anim = GetComponentInChildren<Animator>();
         if (anim == null) throw new Exception("Missing Animator on: " + name);
     }
-    
-    // TODO: hook up the correct animation names
+
     public virtual void Animate(Vector2 dir) {
         dir.Normalize();
+        Debug.Log("Animate regular joe: " + dir + " name:" + name);
         if (isNorth(dir)) {
-            anim.Play("North_Move");
+            anim.Play("Move");
         } else if (isSouth(dir)) {
-            anim.Play("South_Move");
+            anim.Play("Move");
         } else if (isEast(dir)) {
-            anim.Play("East_Move");
+            anim.Play("Move");
         } else if (isWest(dir)) {
-            anim.Play("West_Move");
+            anim.Play("Move");
         } else if (isNone(dir)) {
-            anim.Play("None");
+            Debug.Log("This shouldn't happen: " + dir + " name:" + name);
         } else {
-//            Debug.Log("This shouldn't happen: " + dir);
+            Debug.Log("This also shouldn't happen: " + dir + " name:" + name);
         }
     }
 
