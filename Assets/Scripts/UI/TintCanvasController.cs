@@ -88,7 +88,7 @@ public class TintCanvasController : MonoBehaviour {
             case GameOverReason.SMOOSHED_INGREDIENTS:
                 return "Ingredients got squished together. Gross.";
             case GameOverReason.TOUCHED_INGREDIENT:
-                return "An Ingredient ate you! Stay away and stay safe.";
+                return "Don't touch your food.";
             case GameOverReason.SKEWERED_ALL_INGREDIENTS:
                 return "Won!";
             default:
