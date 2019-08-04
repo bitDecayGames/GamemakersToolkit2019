@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -18,6 +19,7 @@ public class Board : MonoBehaviour
     public GameObject StandardMoveEnemy;
     public GameObject EveryOtherStandardMoveEnemy;
     public GameObject InverseMoveEnemy;
+    public SkewerThrower skewerThrower;
 
     List<List<List<GameObject>>> BoardSteps = new List<List<List<GameObject>>>();
 
@@ -39,14 +41,7 @@ public class Board : MonoBehaviour
         // Debug.Log("Entity future coord: " + entityWantMove.x + ", " + entityWantMove.y);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            NextBoardState(Directions.North);
-        }
-    }
+ 
 
     List<List<GameObject>> GetLatestBoardStep()
     {
@@ -88,6 +83,11 @@ public class Board : MonoBehaviour
                 }
             }
         }
+    }
+
+    public GameOverStatus ThrowSkewer(Vector2 input)
+    {        
+        return SkewerLogic.ShootSkewer(GetLatestBoardStep().ConvertAll(row => row.ConvertAll(cell => cell.GetComponent<Node>())), input, skewerThrower);
     }
 
     List<Vector2> FindAllEntityCoords()
@@ -195,7 +195,7 @@ public class Board : MonoBehaviour
         return blankBoardStep;
     }
 
-    List<List<GameObject>> NextBoardState(Vector2 direction)
+    public GameOverStatus NextBoardState(Vector2 direction)
     {
         List<List<GameObject>> newBoardStep = GetBlankBoardStep();
 
@@ -243,8 +243,9 @@ public class Board : MonoBehaviour
         }
 
         DestroyBoardStepNodes(latestBoardStep);
-
-        return newBoardStep;
+        BoardSteps.Add(newBoardStep);
+        // TODO Create a gameoverstate or return null without one
+        return null;
     }
 
     void DestroyBoardStepNodes(List<List<GameObject>> boardStep)
@@ -329,19 +330,16 @@ public class Board : MonoBehaviour
         List<List<GameObject>> initialBoard = new List<List<GameObject>>();
 
         string levelFileContents = levelFile.text;
-        string[] lines1 = Regex.Split(levelFileContents, "\n|\r|\r|\n");
-        List<string> linesList = new List<string>();
-        foreach (string s in lines1)
+        string[] allLines = Regex.Split(levelFileContents, "\n|\r|\r|\n");
+        List<string> lines = new List<string>();
+        for (int i = allLines.Length - 1; i >= 0; i--)
         {
-            if (s.Length > 0)
-            {
-                linesList.Add(s);
-            }
+            if (allLines[i].Length == 0) continue;
+            lines.Add(allLines[i]);
         }
-
-        string[] lines = linesList.ToArray();
         
-        for(int y = 0; y < lines.Length; y++)
+        
+        for(int y = 0; y < lines.Count; y++)
         {
             if(lines[y].Length == 0) continue;
 
@@ -353,6 +351,8 @@ public class Board : MonoBehaviour
                 newNode.name = "Node(" + x + "," + y + ")";
                 GameObject newTile;
                 GameObject newEntity;
+
+                newNode.GetComponent<Node>().ascii = lines[y][x].ToString();
 
                 switch (lines[y][x])
                 {

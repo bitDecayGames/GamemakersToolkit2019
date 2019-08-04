@@ -25,11 +25,11 @@ public static class SkewerLogic {
         }
         else if (Directions.North == direction) {
             curDirX = 0;
-            curDirY = -1;
+            curDirY = 1;
         }
         else if (Directions.South == direction) {
             curDirX = 0;
-            curDirY = 1;
+            curDirY = -1;
         }
 
         Entity player = null;
