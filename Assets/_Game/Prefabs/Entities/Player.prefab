@@ -161,7 +161,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyAnimator: {fileID: 0}
-  PlayerAnimator: {fileID: 0}
   lerper: {fileID: 0}
   Name: Player
 --- !u!114 &6282919376337112280

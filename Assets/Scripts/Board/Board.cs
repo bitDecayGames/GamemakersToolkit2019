@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Board : MonoBehaviour {
 
+    public const float TIME_TO_ANIMATE = 0.15f;
+
     [Header("Be careful!!!")]
     [Tooltip("Don't modify this unless you are in a test level, or set it back to -1 after you are done at least")]
     public int LevelNumberOverride = -1;
@@ -83,6 +85,8 @@ public class Board : MonoBehaviour {
     }
 
     public GameOverStatus ThrowSkewer(Vector2 input) {
+        // MW hack, but it kinda works...
+        FindObjectOfType<PlayerAnimationCtrl>().AnimateShoot(input.x < 0);
         return SkewerLogic.ShootSkewer(GetLatestBoardStep().ConvertAll(row => row.ConvertAll(cell => cell.GetComponent<Node>())), input, skewerThrower);
     }
 
@@ -217,7 +221,7 @@ public class Board : MonoBehaviour {
             newNode.entity = entity;
 
             newNode.entity.transform.parent = newNode.transform;
-            entity.GetComponent<Entity>().Move(newNode.transform.position, .25f, ()=>{});
+            entity.GetComponent<Entity>().Move(newNode.transform.position, TIME_TO_ANIMATE, ()=>{});
         }
         
         VectorSet SpikeCoords = SpikeTileCheck(newBoardStep);

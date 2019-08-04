@@ -1,56 +1,37 @@
-using System;
 using UnityEngine;
 
-public class PlayerAnimationCtrl : MonoBehaviour {
-    public Animator anim;
-
+public class PlayerAnimationCtrl : MyAnimationCtrl {
     private int walkUpIndex;
     private int walkDownIndex;
     private int walkRightIndex;
     private int walkLeftIndex;
-    
-    private void Start() {
-        anim = GetComponentInChildren<Animator>();
+
+    void Start() {
+        init();
     }
-    
-    // TODO: hook up the correct animation names
-    public void Animate(Vector2 dir) {
-        if (isZero(dir.x) && isPos(dir.y)) {
-            // north
-//            Debug.Log($"Playing {"WalkUp" + (walkUpIndex % 2 + 1)}");
+
+    public override void Animate(Vector2 dir) {
+        dir.Normalize();
+        if (isNorth(dir)) {
             anim.Play("WalkUp" + (walkUpIndex++ % 2 + 1));
-        } else if (isZero(dir.x) && isNeg(dir.y)) {
-            // south
-//            Debug.Log($"Playing {"WalkDown" + (walkDownIndex % 2 + 1)}");
+        } else if (isSouth(dir)) {
             anim.Play("WalkDown" + (walkDownIndex++ % 2 + 1));
-        } else if (isPos(dir.x) && isZero(dir.y)) {
-            // east
-//            Debug.Log($"Playing {"WalkRight" + (walkRightIndex % 2 + 1)}");
+        } else if (isEast(dir)) {
             anim.Play("WalkRight" + (walkRightIndex++ % 2 + 1));
-        } else if (isNeg(dir.x) && isZero(dir.y)) {
-            // west
-//            Debug.Log($"Playing {"WalkLeft" + (walkLeftIndex % 2 + 1)}");
+        } else if (isWest(dir)) {
             anim.Play("WalkLeft" + (walkLeftIndex++ % 2 + 1));
-        } else if (isZero(dir.x) && isZero(dir.y)) {
-            // none
-//            Debug.Log("Playing nothing");
+        } else if (isNone(dir)) {
             anim.Play("None");
-        }
-        else
-        {
-//            Debug.Log("Hit a mystery zone");
+        } else {
+            Debug.LogWarning("Hit a mystery zone: " + name);
         }
     }
 
-    public bool isZero(float f) {
-        return Math.Abs(f) < 0.001f;
-    }
-
-    public bool isPos(float f) {
-        return f > 0;
-    }
-
-    public bool isNeg(float f) {
-        return f < 0;
+    public void AnimateShoot(bool left) {
+        if (left) {
+            anim.Play("ThrowLeft_Down");
+        } else {
+            anim.Play("ThrowRight_Down");
+        }
     }
 }
