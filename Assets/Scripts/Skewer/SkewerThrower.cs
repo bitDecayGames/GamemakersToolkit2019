@@ -90,8 +90,7 @@ public class SkewerThrower : MonoBehaviour {
                 if (!skeweredIngredients.Contains(ing) && shouldSkewerIngredient(ing)) {
                     skeweredIngredients.Add(ing);
                     // TODO: SFX ingredient got gotted
-                    FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.Squish);
-                    FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.CrunchSmall);
+                    FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.SquishGame);
                 }
             }
         }
