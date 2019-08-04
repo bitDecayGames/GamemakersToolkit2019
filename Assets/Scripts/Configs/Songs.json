@@ -1,6 +1,7 @@
 {
   "Songs":[
     "Title",
-    "MainGame"
+    "MainGame",
+    "TitleNoSoundClip"
   ]
 }

@@ -9,6 +9,7 @@
     "Throw",
     "Button",
     "Pipe",
-    "NesStep"
+    "NesStep",
+    "Success"
   ]
 }
