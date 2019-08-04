@@ -3,14 +3,13 @@ using UnityEngine;
 
 public class MyAnimationCtrl : MonoBehaviour {
     public Animator anim;
-
+    
     private void Start() {
         anim = GetComponentInChildren<Animator>();
     }
     
     // TODO: hook up the correct animation names
     public void Animate(Vector2 dir) {
-        Debug.Log("Call is at the normal animation controller");
         
         if (isZero(dir.x) && isPos(dir.y)) {
             // north
