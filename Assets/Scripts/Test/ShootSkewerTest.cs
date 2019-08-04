@@ -10,7 +10,19 @@ public class ShootSkewerTest : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            var result = SkewerLogic.ShootSkewer(ParseLevel(@"P.uu#u######"), Directions.East, thrower);
+            var result = SkewerLogic.ShootSkewer(ParseLevel(@"
+
+##########
+###{#u#}##
+###[#u##}#
+#P#u###]##
+#[######]#
+##########
+
+
+
+
+"), Directions.East, thrower);
             Debug.Log("Result: " + result.reason);
         }
     }
@@ -19,9 +31,14 @@ public class ShootSkewerTest : MonoBehaviour {
     public List<List<Node>> ParseLevel(String levelFileContents) {
         List<List<Node>> initialBoard = new List<List<Node>>();
 
-        string[] lines = Regex.Split(levelFileContents, "\n|\r|\r|\n");
+        string[] allLines = Regex.Split(levelFileContents, "\n|\r|\r|\n");
+        List<string> lines = new List<string>();
+        for (int i = allLines.Length - 1; i >= 0; i--) {
+            if (allLines[i].Length == 0) continue;
+            lines.Add(allLines[i]);
+        }
 
-        for (int y = 0; y < lines.Length; y++) {
+        for (int y = 0; y < lines.Count; y++) {
             if (lines[y].Length == 0) continue;
 
             initialBoard.Add(new List<Node>());
@@ -31,13 +48,15 @@ public class ShootSkewerTest : MonoBehaviour {
                 GameObject newTile;
                 GameObject newEntity;
 
+                newNode.ascii = lines[y][x].ToString();
+                
                 switch (lines[y][x]) {
                     // Void Node
                     case '#':
                         newTile = Instantiate(board.Void);
                         newTile.transform.parent = newNode.transform;
                         newTile.transform.localPosition = new Vector3();
-                        newNode.GetComponent<Node>().tile = newTile;
+                        newNode.tile = newTile;
 
                         break;
                     // Empty Floor Node
