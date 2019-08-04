@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: FmodProject\project.fspro
-  SourceProjectPathUnformatted: FmodProject\project.fspro
-  SourceBankPathUnformatted: FmodProject\Build
+  sourceProjectPath: FmodProject/project.fspro
+  SourceProjectPathUnformatted: FmodProject/project.fspro
+  SourceBankPathUnformatted: FmodProject/Build
   AutomaticEventLoading: 1
   AutomaticSampleLoading: 0
   ImportType: 0
@@ -59,6 +59,8 @@ MonoBehaviour:
   - Platform: 2
     Value: 32
   Plugins: []
-  MasterBanks: []
-  Banks: []
+  MasterBanks:
+  - Master Bank
+  Banks:
+  - SFX
   LiveUpdatePort: 9264
