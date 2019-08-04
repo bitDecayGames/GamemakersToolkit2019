@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5414867036151547904}
   - component: {fileID: 2810242184128271183}
+  - component: {fileID: 1350448477247305858}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -67,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1085758929
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 4428007689558990534, guid: f3a264fad3d484f32a0594bafe3ee1db,
     type: 3}
@@ -81,6 +82,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1350448477247305858
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2677984969650921367}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3231074217552719825
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +112,8 @@ GameObject:
   - component: {fileID: 3546796661168543091}
   - component: {fileID: 5833944350268302050}
   - component: {fileID: 979939499479639708}
+  - component: {fileID: 6282919376337112280}
+  - component: {fileID: 409415822696971150}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -141,3 +163,27 @@ MonoBehaviour:
   animator: {fileID: 0}
   lerper: {fileID: 0}
   Name: Player
+--- !u!114 &6282919376337112280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3231074217552719825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84025ed357354c96a738a1c139dd2fe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &409415822696971150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3231074217552719825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac6bf98449d141239a400a7ecc3dcc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
