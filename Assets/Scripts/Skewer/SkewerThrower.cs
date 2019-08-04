@@ -60,6 +60,7 @@ public class SkewerThrower : MonoBehaviour {
         if (skewerLength <= 0) throw new Exception("The skewer length must be greater than 0");
         
         // TODO: SFX: shoot skewer
+        FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.Throw);
         isMoving = true;
         tipPercent = 0;
         tailPercent = 0;
@@ -89,6 +90,8 @@ public class SkewerThrower : MonoBehaviour {
                 if (!skeweredIngredients.Contains(ing) && shouldSkewerIngredient(ing)) {
                     skeweredIngredients.Add(ing);
                     // TODO: SFX ingredient got gotted
+                    FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.Squish);
+                    FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.CrunchSmall);
                 }
             }
         }
