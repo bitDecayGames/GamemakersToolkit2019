@@ -103,6 +103,7 @@ public class overlord : MonoBehaviour {
                     //when not in throw mode, past directional input as movement
                     status = Board.NextBoardState(input);
                     _lockoutDuration = InputLockoutDuration;
+                    FMODSoundEffectsPlayer.Instance.PlaySoundEffect(SFX.NesStep);
                 }
             }
         }
