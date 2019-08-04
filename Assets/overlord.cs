@@ -87,7 +87,6 @@ public class overlord : MonoBehaviour {
             {
                 status = Board.ThrowSkewer(input);
                 inSkewerThrowMode = false;
-                acceptingInput = false;
             }
             else
             {
@@ -100,6 +99,8 @@ public class overlord : MonoBehaviour {
         }
 
         if (status != null) {
+            acceptingInput = false;
+
             if (status.win) {
                 Debug.Log("WE KAAAAA-WON!!!:" + status.reason);
                 //player won
