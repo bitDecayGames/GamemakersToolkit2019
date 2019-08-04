@@ -99,14 +99,14 @@ public class overlord : MonoBehaviour {
                     Debug.Log("The user pressed space to go to the next scene");
                     endGamePlayer.Reset();
                     // Go to next level
-                    if (CurrentLevelNumber.Instance.LevelNumber + 1 > LevelContent.levels.Count) {
+                    if (CurrentLevelNumber.Instance.LevelNumber + 1 >= LevelContent.levels.Count) {
                         // they won the entire game!
                         goToScene("Credits");
                     } else {
+                        CurrentLevelNumber.Instance.LevelNumber += 1;
                         if (NextLevelOverride != null && NextLevelOverride.Length > 0) {
                             goToScene(NextLevelOverride);
                         } else {
-                            CurrentLevelNumber.Instance.LevelNumber += 1;
                             goToScene(SceneManager.GetActiveScene().name);
                         }
                     }
