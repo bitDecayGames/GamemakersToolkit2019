@@ -213,9 +213,9 @@ public class Board : MonoBehaviour
             FutureEntityCoords.Add(FindEntityMoveFuture(coord, direction));
         }
 
-        List<Vector2> CyclicCheckCoords = CyclicCheck(AllEntityPastCoords, FutureEntityCoords);
+        VectorSet CyclicCheckCoords = CyclicCheck(AllEntityPastCoords, FutureEntityCoords);
 
-        List<Vector2> CollidedEntityCoords = CollisionCheck(AllEntityPastCoords, CyclicCheckCoords);
+        VectorSet CollidedEntityCoords = CollisionCheck(AllEntityPastCoords, CyclicCheckCoords.vecs);
 
 
         // for(int i = 0; i < CyclicCheckCoords.Count; i++)
@@ -236,10 +236,10 @@ public class Board : MonoBehaviour
         for(int i = 0; i < AllEntityPastCoords.Count; i++)
         {
             Debug.Log("Entity Past Coord: " + AllEntityPastCoords[i].x + ", " + AllEntityPastCoords[i].y);
-            Debug.Log("Entity Cyclic Coord: " + CyclicCheckCoords[i].x + ", " + CyclicCheckCoords[i].y);
+            Debug.Log("Entity Cyclic Coord: " + CyclicCheckCoords.vecs[i].x + ", " + CyclicCheckCoords.vecs[i].y);
 
             GameObject entity = latestBoardStep[(int)AllEntityPastCoords[i].y][(int)AllEntityPastCoords[i].x].GetComponent<Node>().entity;
-            Node newNode = newBoardStep[(int)CyclicCheckCoords[i].y][(int)CyclicCheckCoords[i].x].GetComponent<Node>();
+            Node newNode = newBoardStep[(int)CyclicCheckCoords.vecs[i].y][(int)CyclicCheckCoords.vecs[i].x].GetComponent<Node>();
             newNode.entity = entity;
 
             newNode.entity.transform.parent = newNode.transform;
@@ -249,8 +249,20 @@ public class Board : MonoBehaviour
 
         DestroyBoardStepNodes(latestBoardStep);
         BoardSteps.Add(newBoardStep);
+        
         // TODO Create a gameoverstate or return null without one
-        return null;
+        GameOverStatus finalStatus = CyclicCheckCoords.status;
+        if (finalStatus == null)
+        {
+            finalStatus = CollidedEntityCoords.status;
+        }
+
+        if (finalStatus != null)
+        {
+            Debug.Log("WE HAVE FAILED");
+        }
+        
+        return finalStatus;
     }
 
     void DestroyBoardStepNodes(List<List<GameObject>> boardStep)
@@ -264,8 +276,9 @@ public class Board : MonoBehaviour
         }
     }
 
-    List<Vector2> CollisionCheck (List<Vector2> PastCoords, List<Vector2> FutureCoords)
+    VectorSet CollisionCheck (List<Vector2> PastCoords, List<Vector2> FutureCoords)
     {
+        VectorSet result = new VectorSet();
         List<Vector2> FinalCoordList = new List<Vector2>();
 
         for (int i = 0; i < FutureCoords.Count; i++)
@@ -277,15 +290,22 @@ public class Board : MonoBehaviour
             }
             if(matchedCoords > 1)
             {
+                result.status = new GameOverStatus(GameOverReason.SMOOSHED_INGREDIENTS);
                 FinalCoordList.Add(PastCoords[i]);
             }
         }
-        return FinalCoordList;
+
+        result.vecs = FinalCoordList;
+        
+        return result;
     }
 
-    List<Vector2> CyclicCheck (List<Vector2> PastCoords, List<Vector2> FutureCoords)
+    VectorSet CyclicCheck (List<Vector2> PastCoords, List<Vector2> FutureCoords)
     {
+        VectorSet result = new VectorSet();
         List<Vector2> FinalCoordList = new List<Vector2>();
+        
+        List<Vector2> playerCoord = FindEntityCoords(Player.GetComponent<Entity>());
 
         for(int i = 0; i < FutureCoords.Count; i++)
         {
@@ -297,6 +317,12 @@ public class Board : MonoBehaviour
                 int matchedPastIndex = PastCoords.IndexOf(FutureCoords[checkingIndex]);
                 if(matchedPastIndex != -1)
                 {
+
+                    if (playerCoord[0] == PastCoords[i])
+                    {
+                        // Player is running into something baddo
+                        result.status = new GameOverStatus(GameOverReason.TOUCHED_INGREDIENT);
+                    }
                     cyclicCount++;
                     if(cyclicList.Contains(matchedPastIndex))
                     {
@@ -318,7 +344,8 @@ public class Board : MonoBehaviour
             }
         }
 
-        return FinalCoordList;
+        result.vecs = FinalCoordList;
+        return result;
     }
 
     void setCameraLocation(int columns, int rows)
@@ -505,4 +532,22 @@ public class Board : MonoBehaviour
         }
         BoardSteps.Add(initialBoard);
     }
+
+    private class VectorSet
+    {
+        public List<Vector2> vecs;
+        public GameOverStatus status;
+
+        public VectorSet()
+        {
+            
+        }
+        
+        public VectorSet(List<Vector2> v, GameOverStatus s)
+        {
+            vecs = v;
+            status = s;
+        }
+    }
+    
 }
