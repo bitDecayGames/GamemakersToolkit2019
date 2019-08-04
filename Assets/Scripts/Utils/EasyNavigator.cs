@@ -20,5 +20,9 @@ namespace Utils {
                 FadeToBlack.Instance.FadeOutToScene(2.5f, sceneName);
             }
         }
+
+        public void GoToSceneQuick(string sceneName) {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

@@ -43,9 +43,7 @@ public class overlord : MonoBehaviour {
             //}
 
             if (Input.GetKeyDown(KeyCode.R)) {
-                //resets the level
-                //Board.goToLevel(current)
-                //Board.resetLevel();??
+                Restart();
             }
 
             if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -111,15 +109,25 @@ public class overlord : MonoBehaviour {
                     Debug.Log("The user pressed space to restart this level");
                     endGamePlayer.Reset();
                     // Restart this level
-                    goToScene(SceneManager.GetActiveScene().name);
+                    Restart();
                 });
             }
         }
+    }
+
+    public void Restart() {
+        goToSceneQuick(SceneManager.GetActiveScene().name);
     }
 
     private void goToScene(String sceneName) {
         var nav = FindObjectOfType<EasyNavigator>();
         if (nav == null) throw new Exception("We forgot to put the EasyNavigator here, our bad");
         nav.GoToSceneWithSoundWithClick(sceneName);
+    }
+
+    private void goToSceneQuick(String sceneName) {
+        var nav = FindObjectOfType<EasyNavigator>();
+        if (nav == null) throw new Exception("We forgot to put the EasyNavigator here, our bad");
+        nav.GoToSceneQuick(sceneName);
     }
 }
