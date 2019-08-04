@@ -11,6 +11,18 @@ TextureImporter:
   - first:
       213: -4884857652332154202
     second: 2-0
+  - first:
+      213: 2608193178743931781
+    second: ThrowRight_Down.160_160_0
+  - first:
+      213: -1433999309804131842
+    second: ThrowRight_Down.160_160_1
+  - first:
+      213: 3222221486017856116
+    second: ThrowRight_Down.160_160_2
+  - first:
+      213: -78620416431323523
+    second: ThrowRight_Down.160_160_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -83,7 +95,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 0-0
+      name: ThrowRight_Down.160_160_0
       rect:
         serializedVersion: 2
         x: 0
@@ -95,16 +107,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6ce9cd67881737d30800000000000000
-      internalID: 4428007689558990534
+      spriteID: 10d1537df685f41b1b9b353eaeac3d23
+      internalID: 2608193178743931781
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1-0
+      name: ThrowRight_Down.160_160_1
       rect:
         serializedVersion: 2
         x: 160
@@ -116,16 +128,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0ffa0ce405aa74a20800000000000000
-      internalID: 3046590934834786288
+      spriteID: 695514b8dc94b40609e663f652419531
+      internalID: -1433999309804131842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2-0
+      name: ThrowRight_Down.160_160_2
       rect:
         serializedVersion: 2
         x: 320
@@ -137,10 +149,31 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6a2b466a8df753cb0800000000000000
-      internalID: -4884857652332154202
+      spriteID: e78d084da8e044f3c98bb95f2f724147
+      internalID: 3222221486017856116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ThrowRight_Down.160_160_3
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5051a33166d604f9aaac16f04af0a917
+      internalID: -78620416431323523
       vertices: []
       indices: 
       edges: []
@@ -148,7 +181,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: db1901eb1b7cb4914b0505f333106802
     internalID: 0
     vertices: []
     indices: 

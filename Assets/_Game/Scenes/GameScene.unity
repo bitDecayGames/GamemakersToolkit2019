@@ -844,7 +844,7 @@ PrefabInstance:
     - target: {fileID: 6798068932196939023, guid: 0acac440d8056914ba7c9caa91d8a567,
         type: 3}
       propertyPath: LevelNumberOverride
-      value: 4
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -1182750708440718769, guid: 0acac440d8056914ba7c9caa91d8a567,
         type: 3}
