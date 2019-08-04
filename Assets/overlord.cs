@@ -133,7 +133,7 @@ public class overlord : MonoBehaviour {
                     if (CurrentLevelNumber.Instance.LevelNumber + 1 >= LevelContent.levels.Count) {
                         // they won the entire game!
                         goToScene("Credits");
-                        FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.Finale, 1);
+                        FMODMusicPlayer.Instance.SetParameter(ParametersListEnum.Parameters.GoToFinale, 1);
                     } else {
                         NextLevel();
                     }

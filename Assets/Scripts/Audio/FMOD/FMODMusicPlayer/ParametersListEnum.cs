@@ -3,6 +3,6 @@
     public enum Parameters
     {
         LowPass = 247002279,
-        Finale = 247002271
+        GoToFinale = 247002271
     }
 }
