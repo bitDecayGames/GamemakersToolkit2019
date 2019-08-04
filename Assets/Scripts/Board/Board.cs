@@ -21,8 +21,8 @@ public class Board : MonoBehaviour
 
     List<List<List<GameObject>>> BoardSteps = new List<List<List<GameObject>>>();
 
-    const float TileHeight = 0.8f;
-    const float TileWidth = TileHeight;
+    public const float TileHeight = 0.8f;
+    public const float TileWidth = TileHeight;
 
     float xOffset;
     float yOffset;
@@ -36,12 +36,19 @@ public class Board : MonoBehaviour
         // Vector2 entityWantMove = FindEntityMove(entityCoord, Directions.East);
         // Debug.Log("Entity past coord: " + entityCoord.x + ", " + entityCoord.y);
         // Debug.Log("Entity future coord: " + entityWantMove.x + ", " + entityWantMove.y);
+        NextBoardState(Directions.East);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    List<List<GameObject>> GetLatestBoardStep()
+    {
+        int latest = BoardSteps.Count -1;
+        return BoardSteps[latest];
     }
 
     List<Vector2> FindEntityCoords(Entity entity)
@@ -103,7 +110,7 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    Vector2 FindEntityMove(Vector2 entityCoord, Vector2 direction)
+    Vector2 FindEntityMoveFuture(Vector2 entityCoord, Vector2 direction)
     {
         int latest = BoardSteps.Count -1;
 
@@ -144,14 +151,113 @@ public class Board : MonoBehaviour
         return null;
     }
 
-    // List<List<GameObject>> NextBoardState(Vector2 direction)
-    // {
-    //     List<Vector2> AllEntityCoords = FindAllEntityCoords();
+    void ClearBoardStep(List<List<GameObject>> boardStep)
+    {
+        for(int y = 0; y < boardStep.Count; y++)
+        {
+            for(int x = 0; x < boardStep[y].Count; x++)
+            {
+                boardStep[y][x].GetComponent<Node>().entity = null;
+            }
+        }
+    }
 
-    //     List<Vector2> FutureEntityCoords = new List<Vector2>();
+
+    List<List<GameObject>> NextBoardState(Vector2 direction)
+    {
+        List<List<GameObject>> newBoardStep = GetLatestBoardStep();
+        ClearBoardStep(newBoardStep);
+
+        List<Vector2> AllEntityPastCoords = FindAllEntityCoords();
+
+        List<Vector2> FutureEntityCoords = new List<Vector2>();
+
+        foreach (Vector2 coord in AllEntityPastCoords)
+        {
+            FutureEntityCoords.Add(FindEntityMoveFuture(coord, direction));
+        }
+
+        List<Vector2> CyclicCheckCoords = CyclicCheck(AllEntityPastCoords, FutureEntityCoords);
+
+        List<Vector2> CollidedEntityCoords = CollisionCheck(AllEntityPastCoords, CyclicCheckCoords);
 
 
-    // }
+        // for(int i = 0; i < CyclicCheckCoords.Count; i++)
+        // {
+        //     Debug.Log("Entity Past Coord: " + AllEntityPastCoords[i].x + ", " + AllEntityPastCoords[i].y);
+        //     Debug.Log("Entity Cyclic Coord: " + CyclicCheckCoords[i].x + ", " + CyclicCheckCoords[i].y);
+        // }
+        // foreach (Vector2 coord in CollidedEntityCoords)
+        // {
+        //     Debug.Log("Entity Collision Coord: " + coord.x + ", " + coord.y);
+        // }
+
+        for(int i = 0; i < AllEntityPastCoords.Count; i++)
+        {
+            List<List<GameObject>> latestBoardSTep = GetLatestBoardStep();
+            GameObject entity = latestBoardSTep[(int)AllEntityPastCoords[i].y][(int)AllEntityPastCoords[i].x].GetComponent<Node>().entity;
+            newBoardStep[(int)CyclicCheckCoords[i].y][(int)CyclicCheckCoords[i].x].GetComponent<Node>().entity = entity;
+        }
+
+        return newBoardStep;
+    }
+
+    List<Vector2> CollisionCheck (List<Vector2> PastCoords, List<Vector2> FutureCoords)
+    {
+        List<Vector2> FinalCoordList = new List<Vector2>();
+
+        for (int i = 0; i < FutureCoords.Count; i++)
+        {
+            int matchedCoords = 0;
+            foreach (Vector2 coord in FutureCoords)
+            {
+                if (coord == FutureCoords[i]) matchedCoords ++;
+            }
+            if(matchedCoords > 1)
+            {
+                FinalCoordList.Add(PastCoords[i]);
+            }
+        }
+        return FinalCoordList;
+    }
+
+    List<Vector2> CyclicCheck (List<Vector2> PastCoords, List<Vector2> FutureCoords)
+    {
+        List<Vector2> FinalCoordList = new List<Vector2>();
+
+        for(int i = 0; i < FutureCoords.Count; i++)
+        {
+            int cyclicCount = 0;
+            int checkingIndex = i;
+            List<int> cyclicList = new List<int>();
+            while(true)
+            {
+                int matchedPastIndex = PastCoords.IndexOf(FutureCoords[checkingIndex]);
+                if(matchedPastIndex != -1)
+                {
+                    cyclicCount++;
+                    if(cyclicList.Contains(matchedPastIndex))
+                    {
+                        if (matchedPastIndex != i || cyclicCount == 2)
+                        {
+                            FinalCoordList.Add(PastCoords[i]);
+                        } else 
+                        {
+                            FinalCoordList.Add(FutureCoords[i]);
+                        }
+                        break;
+                    }
+                    cyclicList.Add(matchedPastIndex);
+                    checkingIndex = matchedPastIndex;
+                } else {
+                    FinalCoordList.Add(FutureCoords[i]);
+                    break;
+                }
+            }
+        }
+
+        return FinalCoordList;
+    }
 
     // void Undo()
     // {

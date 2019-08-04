@@ -45,6 +45,9 @@ TagManager:
   - name: Tiles
     uniqueID: 256657489
     locked: 0
+  - name: Skewer
+    uniqueID: 417808579
+    locked: 0
   - name: Entities
     uniqueID: 3209208367
     locked: 0
