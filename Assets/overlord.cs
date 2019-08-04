@@ -17,7 +17,16 @@ public class overlord : MonoBehaviour {
 
     private const float InputLockoutDuration = .20f;
     private float _lockoutDuration;
-    
+
+    private void Start()
+    {
+        var endGamePlayer = FindObjectOfType<TintCanvasController>();
+        if (endGamePlayer != null)
+        {
+            endGamePlayer.Reset();
+        }
+    }
+
     void Update()
     {
         _lockoutDuration -= Time.deltaTime;
@@ -106,7 +115,6 @@ public class overlord : MonoBehaviour {
             if (status.win) {
                 //player won
                 endGamePlayer.Success(() => {
-                    endGamePlayer.Reset();
                     // Go to next level
                     if (CurrentLevelNumber.Instance.LevelNumber + 1 >= LevelContent.levels.Count) {
                         // they won the entire game!
