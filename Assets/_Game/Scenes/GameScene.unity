@@ -841,16 +841,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6798068932196939023, guid: 0acac440d8056914ba7c9caa91d8a567,
-        type: 3}
-      propertyPath: levelFile
-      value: 
-      objectReference: {fileID: 4900000, guid: b1c9168d506c04298b9af1fd38c9414a, type: 3}
-    - target: {fileID: 6798068932196939023, guid: 0acac440d8056914ba7c9caa91d8a567,
-        type: 3}
-      propertyPath: LevelNumberOverride
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0acac440d8056914ba7c9caa91d8a567, type: 3}
 --- !u!1 &1886705555
