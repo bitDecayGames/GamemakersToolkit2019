@@ -1,0 +1,606 @@
+title Ka-Bob
+author BitDecay Games 2019
+homepage https://bitdecaygames.itch.io/
+key_repeat_interval 100
+color_palette arnecolors
+again_interval .08
+norepeat_action
+
+========
+OBJECTS
+========
+
+Wall 
+BROWN
+
+Void
+black white
+00001
+00000
+01000
+00010
+00000
+
+Boundary
+black white
+00010
+10100
+00010
+10001
+01000
+
+Background 
+darkgreen
+
+MirrorTLBR
+white brown 
+11...
+.11..
+.101.
+..11.
+...11
+
+HitUp
+red
+.....
+.0.0.
+.0.0.
+.000.
+.....
+
+HitDown
+red
+.....
+.00..
+.0.0.
+.00..
+.....
+
+HitLeft
+red
+.....
+.0...
+.0...
+.000.
+.....
+
+HitRight
+red
+.....
+.000.
+.0...
+.0...
+.....
+
+MirrorTRBL
+white brown
+...11
+..11.
+.101.
+.11..
+11...
+
+Bob 
+pink lightblue grey    
+.111.
+.000.
+21112
+.222.
+.2.2.
+
+Water
+Blue lightblue
+00000
+00111
+00000
+11001
+00000
+
+Tomato
+Red green
+.010.
+00000
+00000
+00000
+.000.
+
+Onion
+White
+..0..
+.000.
+00000
+00000
+.000.
+
+Steak
+red white
+10001
+00110
+01000
+00100
+01010
+
+SkewerUp
+pink
+..0..
+..0..
+..0..
+..0..
+..0..
+
+SkewerDown
+pink
+..0..
+..0..
+..0..
+..0..
+..0..
+
+SkewerLeft
+pink
+.....
+.....
+00000
+.....
+.....
+
+SkewerRight
+pink
+.....
+.....
+00000
+.....
+.....
+
+SkewerTrigger
+black white
+.....
+.111.
+.101.
+.111.
+.....
+
+SkewerDone
+pink
+.....
+.0.0.
+..0..
+.0.0.
+.....
+
+MushroomAwake
+gray
+.000.
+00000
+00000
+..0..
+..0..
+
+MushroomAsleep
+darkgray black
+.000.
+10101
+00000
+..0..
+..0..
+
+Smoosh
+red purple
+.....
+.010.
+.101.
+.010.
+.....
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+_ = Void
+* = Boundary
+B = Bob
+w = Water
+T = Tomato
+O = Onion
+S = Steak
+z = MushroomAsleep
+m = MushroomAwake
+x = Smoosh
+
+u = SkewerUp
+d = SkewerDown
+l = SkewerLeft
+r = SkewerRight
+@ = SkewerDone
+
+/ = MirrorTRBL
+\ = MirrorTLBR
+
+Ingredient = Tomato or Onion or Steak or MushroomAwake or MushroomAsleep
+Player = Bob
+AnySkewer = SkewerUp or SkewerDown or SkewerLeft or SkewerRight
+AnyMirror = MirrorTLBR or MirrorTRBL
+
+=======
+SOUNDS
+=======
+
+restart 87926102
+
+(Player fails to move)
+cancel 67984504
+
+Player move 76283707
+
+(Smoosh sfx)
+sfx0 54276502
+
+(Ready skewer)
+sfx1 73291505
+
+(Throw skewer)
+sfx2 52782701
+
+(Hit sfx)
+sfx3 67118101
+
+(Skewer travelling)
+sfx4 37953909
+
+(Water splash)
+sfx5 95381702
+
+(Reflector hit by skewer)
+sfx6 87870906
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Water
+Wall, Void, Boundary, MirrorTLBR, MirrorTRBL
+Player
+Ingredient
+Smoosh
+SkewerUp, SkewerDown, SkewerLeft, SkewerRight, SkewerDone
+SkewerTrigger
+
+HitUp, HitDown, HitLeft, HitRight
+
+======
+RULES
+======
+
+(====================
+  Restart Conditions
+  ===================)
+(Smoosh last turn results in restart this turn)
+[ Smoosh ] -> restart
+[ SkewerDone ] -> restart
+
+(================
+ Death Conditions
+ ================)
+[ Player AnySkewer ] -> [ Smoosh ] message Ka-Failed: Um, try not to kill yourself
+late [ Player Ingredient ] -> [ Smoosh ] message Don't touch your food
+late [ Smoosh ] -> sfx0
+
+(===============
+ Skewer Throwing
+ ===============)
+up    [ up    Player | SkewerTrigger ] -> [ Player up    SkewerUp    | ] sfx2
+down  [ down  Player | SkewerTrigger ] -> [ Player down  SkewerDown  | ] sfx2
+left  [ left  Player | SkewerTrigger ] -> [ Player left  SkewerLeft  | ] sfx2
+right [ right Player | SkewerTrigger ] -> [ Player right SkewerRight | ] sfx2
+
+(Clean up any unused triggers) 
+[ SkewerTrigger ] -> []
+
+(Fail if skewers make it to a terminal state)
+[ AnySkewer Boundary ] -> [ Boundary SkewerDone ]
+[ AnySkewer Wall ] -> [ Wall SkewerDone ]
+[ SkewerDone ] [ Ingredient ]  -> message Ka-Failed: Some ingredients didn't get skewered!
+
+( Skewer hit right side of mirror tile )
+up    [ SkewerUp    |  AnyMirror  ]  -> [ | AnyMirror HitDown  ] 
+down  [ SkewerDown  |  AnyMirror  ]  -> [ | AnyMirror HitUp    ] 
+left  [ SkewerLeft  |  AnyMirror  ]  -> [ | AnyMirror HitRight ] 
+right [ SkewerRight |  AnyMirror  ]  -> [ | AnyMirror HitLeft  ] 
+
+(Animate our skewers flying along)
+late [ Ingredient AnySkewer ] -> [ AnySkewer ] sfx3
+[ SkewerUp    | ] -> [ | up    SkewerUp    ] sfx4 again
+[ SkewerDown  | ] -> [ | down  SkewerDown  ] sfx4 again
+[ SkewerLeft  | ] -> [ | left  SkewerLeft  ] sfx4 again
+[ SkewerRight | ] -> [ | right SkewerRight ] sfx4 again
+
+up    [ MirrorTRBL HitLeft  ] -> [ MirrorTRBL SkewerUp    ] sfx6 again
+left  [ MirrorTRBL HitUp    ] -> [ MirrorTRBL SkewerLeft  ] sfx6 again
+down  [ MirrorTRBL HitRight ] -> [ MirrorTRBL SkewerDown  ] sfx6 again
+right [ MirrorTRBL HitDown  ] -> [ MirrorTRBL SkewerRight ] sfx6 again
+
+up    [ MirrorTLBR HitRight ] -> [ MirrorTLBR SkewerUp    ] sfx6 again
+right [ MirrorTLBR HitUp    ] -> [ MirrorTLBR SkewerRight ] sfx6 again
+down  [ MirrorTLBR HitLeft  ] -> [ MirrorTLBR SkewerDown  ] sfx6 again
+left  [ MirrorTLBR HitDown  ] -> [ MirrorTLBR SkewerLeft  ] sfx6 again
+ 
+(============
+ Player Input
+ ============)
+up [ action Player | ] -> [ action Player | SkewerTrigger ] sfx1
+down [ action Player | ] -> [ action Player | SkewerTrigger ] sfx1
+left [ action Player | ] -> [ action Player | SkewerTrigger ] sfx1
+right [ action Player | ] -> [ action Player | SkewerTrigger ] sfx1
+
+(Player cannot walk into walls)
+[ > Player | Wall ]  -> cancel
+[ > Player | Void ]  -> cancel
+[ > Player | AnyMirror ]  -> cancel
+
+(Tomato and onion move 1:1 with player)
+[ > Player ] [Tomato] -> [ > Player ] [ > Tomato ]
+[ > Player ] [Onion]  -> [ > Player ] [ < Onion ]
+
+(Onion and player cannot cross over each other)
+[ > Player | < Onion ] -> [ Smoosh | Smoosh ] message Don't touch your food
+
+(Awake mushrooms move  with player)
+[ > Player ] [MushroomAwake] -> [ > Player ] [ > MushroomAwake]
+
+(Asleep mushrooms wake up when player moves)
+[ > Player ] [MushroomAsleep] ->  [ >  Player ] [MushroomAwake]
+
+(Any mushrooms that moved go to sleep)
+[ > MushroomAwake ]  -> [ > MushroomAsleep ]
+
+(We need to custom handle ingredient collisions so we can detect smoosh)
+[ > Ingredient | Wall      ]  -> [ Ingredient | Wall ]
+[ > Ingredient | Void      ]  -> [ Ingredient | Void ]
+[ > Ingredient | AnyMirror ]  -> [ Ingredient | AnyMirror ]
+
+(Smooshed ingredients trying to move into the same space)
+[ > Ingredient | | < Ingredient] -> [ | Smoosh | ] message Ka-Failed: Ingredients got squished together. Gross.
+
+late [ Ingredient Water ] -> [ Smoosh Water ] sfx5
+late [ Player Water ]     -> [ Smoosh Water ] sfx5
+late [ Smoosh Water ] -> message Ka-Failed: Drowning isn't good for you or your ingredients!
+
+==============
+WINCONDITIONS
+==============
+
+no Ingredient
+no AnySkewer
+no Smoosh
+
+=======     
+LEVELS
+======
+
+message Press action to ready your skewer! Then pick a direction to throw it.
+
+*******
+*_____*
+*___s_*
+*_____*
+*_b.._*
+*_____*
+*******
+
+message Ka-Nice!
+
+*********
+*_______*
+*_s_s_._*
+*_____._*
+*_b...._*
+*_______*
+*********
+
+message Ka-Nice!
+
+*********
+*_______*
+*_____._*
+*_____._*
+*___._._*
+*_s_._._*
+*___t_._*
+*_____._*
+*_____b_*
+*_______*
+*********
+
+message Ka-Nice!
+
+*********
+*_______*
+*__..b__*
+*__...__*
+*__...__*
+*_______*
+*__t_t__*
+*__...__*
+*___.___*
+*_______*
+*********
+
+message Ka-Nice!
+
+*********
+*_______*
+*__..b__*
+*__...__*
+*__...__*
+*_______*
+*__t_t__*
+*_w...__*
+*___.___*
+*_______*
+*********
+
+message Ka-Nice!
+
+***********
+*_________*
+*_....____*
+*_..______*
+*_.._.____*
+*_.._.____*
+*_.b_.__._*
+*_.._tt.t_*
+*_____._._*
+*_____.___*
+*_________*
+***********
+
+message Ka-Nice!
+
+*********
+*_______*
+*___..._*
+*___z.._*
+*___..._*
+*_b.t.._*
+*_______*
+*********
+
+message Ka-Nice!
+
+*********
+*_______*
+*____.._*
+*___z.._*
+*___t.._*
+*_b...__*
+*_______*
+*********
+
+message Ka-Nice!
+
+*********
+*_______*
+*_.b____*
+*__._.._*
+*_.._.__*
+*_.._.._*
+*__._.__*
+*____o._*
+*_______*
+*********
+
+message Ka-Nice!
+
+**********
+*________*
+*_.._____*
+*_..b..#_*
+*_####.#_*
+*_..o#w#_*
+*_.#.#.#_*
+*_.....#_*
+*________*
+**********
+
+message Ka-Nice!
+
+**************
+*____________*
+*__/_______\_*
+*____________*
+*_.b.__sss_/_*
+*____________*
+*__\/________*
+*____________*
+**************
+
+message Ka-Nice!
+
+**********
+*________*
+*__/_\/\_*
+*_......_*
+*_o.#./__*
+*__s.t___*
+*________*
+*_....___*
+*_..b.___*
+*__\___/_*
+*________*
+*________*
+**********
+
+message Ka-Nice!
+
+**************
+*____________*
+*__/_______\_*
+*_...__.o.___*
+*_.b.__t#.___*
+*__..__..t_/_*
+*__\_____/___*
+*____________*
+**************
+
+message Ka-Nice!
+
+**************
+*____________*
+*_______/__\_*
+*____________*
+*_...__.o.___*
+*_.b.__t#.___*
+*_...__..t_/_*
+*_______#.___*
+*_______..___*
+*____________*
+**************
+
+message Ka-Nice!
+
+**************
+*____________*
+*__/___\/__\_*
+*__....o_____*
+*_...#...____*
+*_..bt...__/_*
+*__.#s...__\_*
+*__.#....____*
+*_......_____*
+*__\_\_/___/_*
+*____________*
+**************
+
+message Ka-Nice!
+
+************
+*__________*
+*___.._____*
+*_/_.b...#_*
+*___####.#_*
+*___..o#w#_*
+*___.#.#.#_*
+*_\_.t...#_*
+*__________*
+************
+
+message Ka-Nice!
+
+**************
+*____________*
+*______z_____*
+*______..o___*
+*___.___t..\_*
+*___.._______*
+*_..b..______*
+*___.______/_*
+*___.________*
+*____________*
+**************
+
+message Thanks for playing!
+message BitDecay Games © 2019
+message Ported from our Ka-Bob entry to GMTK Game Jam 2019
